@@ -1,0 +1,20 @@
+extends auth
+
+block auth
+  form.signin.form-horizontal(action="/users/session", method="post")
+    p.error= message
+    .control-group
+      label.control-label(for='email') Email
+      .controls
+        input#email(type='text', name="email", placeholder='Email')
+
+    .control-group
+      label.control-label(for='senha') Senha
+      .controls
+        input#password(type='password', name="senha", placeholder='Senha')
+
+    .form-actions
+      button.btn.btn-primary(type='submit') Entrar
+      &nbsp;
+      | ou&nbsp;
+      a.show-signup(href="/cadastrar") Cadastrar

@@ -1,0 +1,29 @@
+extends auth
+
+block auth
+  form.signup.form-horizontal(action="/users", method="post")
+    .control-group
+      label.control-label(for='nome') Nome Completo
+      .controls
+        input#name(type='text', name="nome", placeholder='Nome Completo', value=user.nome)
+
+    .control-group
+      label.control-label(for='email') Email
+      .controls
+        input#email(type='text', name="email", placeholder='Email', value=user.email)
+
+    .control-group
+      label.control-label(for='documento') Documento
+      .controls
+        input#username(type='text', name="documento", placeholder='CPF, Passaporte', value=user.documento)
+
+    .control-group
+      label.control-label(for='senha') Senha
+      .controls
+        input#password(type='password', name="senha", placeholder='Senha')
+
+    .form-actions
+      button.btn.btn-primary(type='submit') Cadastrar
+      &nbsp;
+      | ou&nbsp;
+      a.show-login(href="/entrar") entrar

@@ -1,0 +1,6 @@
+{
+    "db": "mongodb://localhost/fidelidade-dev",
+    "app": {
+        "name": "Programa de Recompensas"
+    }
+}
