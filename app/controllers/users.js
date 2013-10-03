@@ -1,6 +1,15 @@
 var mongoose = require('mongoose'),
   User = mongoose.model('User');
 
+function extractUserContent(submitted) {
+  var user = {};
+  user.nome = submitted.nome;
+  user.email = submitted.email;
+  user.documento = submitted.documento;
+  user.senha = submitted.senha;
+  return user;
+}
+
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
@@ -29,7 +38,7 @@ exports.session = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  var user = new User(req.body);
+  var user = new User(extractUserContent(req.body));
   user.save(function(err, user) {
     if (err) {
       return res.render('users/signup', {
