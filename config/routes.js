@@ -2,7 +2,7 @@ var async = require('async');
 
 module.exports = function(app, passport, auth) {
     //User Routes
-    var users = require('../app/controllers/users');
+    var users = require('../app/controllers/usuarios');
     app.get('/entrar', users.signin);
     app.get('/cadastrar', users.signup);
     app.get('/sair', users.signout);

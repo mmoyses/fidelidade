@@ -1,13 +1,12 @@
 var mongoose = require('mongoose'),
-  User = mongoose.model('User');
+  Usuario = mongoose.model('Usuario');
 
 function extractUserContent(submitted) {
-  var user = {};
-  user.nome = submitted.nome;
-  user.email = submitted.email;
-  user.documento = submitted.documento;
-  user.senha = submitted.senha;
-  return user;
+  var usuario = {};
+  usuario.nome = submitted.nome;
+  usuario.email = submitted.email;
+  usuario.senha = submitted.senha;
+  return usuario;
 }
 
 exports.authCallback = function(req, res, next) {
@@ -38,15 +37,15 @@ exports.session = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  var user = new User(extractUserContent(req.body));
-  user.save(function(err, user) {
+  var usuario = new Usuario(extractUserContent(req.body));
+  usuario.save(function(err, usuario) {
     if (err) {
       return res.render('users/signup', {
         errors: err.errors,
-        user: user
+        user: usuario
       });
     }
-    req.logIn(user, function(err) {
+    req.logIn(usuario, function(err) {
       if (err) return next(err);
         return res.redirect('/');
     });
@@ -67,12 +66,12 @@ exports.me = function(req, res) {
 };
 
 exports.user = function(req, res, next, id) {
-  User.findOne({
+  Usuario.findOne({
     _id: id
-  }).exec(function(err, user) {
+  }).exec(function(err, usuario) {
     if (err) return next(err);
-    if (!user) return next(new Error('Usuário não encontrado ' + id));
-    req.profile = user;
+    if (!usuario) return next(new Error('Usuário não encontrado ' + id));
+    req.profile = usuario;
     next();
   });
 };
