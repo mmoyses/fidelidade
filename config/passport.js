@@ -21,7 +21,7 @@ module.exports = function(passport) {
     //Use local strategy
     passport.use(new LocalStrategy({
             usernameField: 'email',
-            passwordField: 'password'
+            passwordField: 'senha'
         },
         function(email, password, done) {
             Usuario.findOne({
@@ -32,12 +32,12 @@ module.exports = function(passport) {
                 }
                 if (!user) {
                     return done(null, false, {
-                        message: 'Unknown user'
+                        message: 'Email ou senha inválida.'
                     });
                 }
                 if (!user.authenticate(password)) {
                     return done(null, false, {
-                        message: 'Invalid password'
+                        message: 'Email ou senha inválida.'
                     });
                 }
                 return done(null, user);

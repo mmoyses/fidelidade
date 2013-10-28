@@ -23,7 +23,7 @@ exports.signin = function(req, res) {
 exports.signup = function(req, res) {
   res.render('users/signup', {
     title: 'Cadastro',
-    user: new User()
+    user: new Usuario()
   });
 };
 

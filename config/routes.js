@@ -1,36 +1,23 @@
 var async = require('async');
 
 module.exports = function(app, passport, auth) {
-    //User Routes
-    var users = require('../app/controllers/usuarios');
-    app.get('/entrar', users.signin);
-    app.get('/cadastrar', users.signup);
-    app.get('/sair', users.signout);
+    var usuarios = require('../app/controllers/usuarios');
+    app.get('/entrar', usuarios.signin);
+    app.get('/cadastrar', usuarios.signup);
+    app.get('/sair', usuarios.signout);
 
-    //Setting up the users api
-    app.post('/users', users.create);
+    app.post('/usuarios', usuarios.create);
 
-    app.post('/users/session', passport.authenticate('local', {
+    app.post('/usuarios/session', passport.authenticate('local', {
         failureRedirect: '/entrar',
         failureFlash: 'Email ou senha inválida.'
-    }), users.session);
+    }), usuarios.session);
 
-    app.get('/users/me', users.me);
-    app.get('/users/:userId', users.show);
+    app.get('/usuarios/eu', usuarios.me);
+    app.get('/usuarios/:userId', usuarios.show);
 
     //Finish with setting up the userId param
-    app.param('userId', users.user);
-
-    //Article Routes
-    // var articles = require('../app/controllers/articles');
-    // app.get('/articles', articles.all);
-    // app.post('/articles', auth.requiresLogin, articles.create);
-    // app.get('/articles/:articleId', articles.show);
-    // app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
-    // app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
-
-    //Finish with setting up the articleId param
-    // app.param('articleId', articles.article);
+    app.param('userId', usuarios.user);
 
     //Home route
     var index = require('../app/controllers/index');

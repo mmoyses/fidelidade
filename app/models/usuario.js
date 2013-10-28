@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
-  crypto = require('crypto');
+  security = require('../common/security');
 
 var UsuarioSchema = new Schema({
   nome: String,
@@ -32,23 +32,20 @@ UsuarioSchema.path('email').validate(function(email) {
 }, 'Email não pode ser vazio');
 
 UsuarioSchema.path('hashed_password').validate(function(hashed_password) {
-  return hashed_senha.length;
+  return hashed_password.length;
 }, 'Senha não pode ser vazia');
-
-// UsuarioSchema.pre('save', function(next) {
-//   if (!this.isNew) return next();
-
-//   if (!validatePresenceOf(this.senha))
-//     next(new Error('Senha Inválida'));
-// });
 
 UsuarioSchema.methods = {
   authenticate: function(plainText) {
-    return this.encryptPassword(plainText) === this.hashed_senha;
+    return security.encrypt(plainText) === this.hashed_password;
   },
   encryptPassword: function(senha) {
-    if (!senha) return '';
-      return crypto.createHmac('sha1', this.salt).update(senha).digest('hex');
+    if (!senha)
+      return '';
+    return security.encrypt(senha);
+  },
+  decryptPassword: function() {
+    return security.decrypt(this.hashed_password);
   }
 };
 
