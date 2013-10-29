@@ -9,7 +9,7 @@ function extractUserContent(submitted) {
   return usuario;
 }
 
-exports.authCallback = function(req, res, next) {
+exports.authCallback = function(req, res) {
   res.redirect('/');
 };
 
@@ -36,7 +36,7 @@ exports.session = function(req, res) {
   res.redirect('/');
 };
 
-exports.create = function(req, res) {
+exports.create = function(req, res, next) {
   var usuario = new Usuario(extractUserContent(req.body));
   usuario.save(function(err, usuario) {
     if (err) {
@@ -47,7 +47,7 @@ exports.create = function(req, res) {
     }
     req.logIn(usuario, function(err) {
       if (err) return next(err);
-        return res.redirect('/');
+      return res.redirect('/');
     });
   });
 };

@@ -19,10 +19,6 @@ UsuarioSchema.virtual('senha').set(function(senha) {
   return this._senha;
 });
 
-var validatePresenceOf = function(value) {
-  return value && value.length;
-};
-
 UsuarioSchema.path('nome').validate(function(nome) {
   return nome.length;
 }, 'Nome não pode ser vazio');
