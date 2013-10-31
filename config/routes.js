@@ -1,5 +1,3 @@
-var async = require('async');
-
 module.exports = function(app, passport) {
   var usuarios = require('../app/controllers/usuarios');
   app.get('/entrar', usuarios.signin);

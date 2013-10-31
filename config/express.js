@@ -2,7 +2,8 @@ var express = require('express'),
   mongoStore = require('connect-mongo')(express),
   flash = require('connect-flash'),
   helpers = require('view-helpers'),
-  config = require('./config');
+  config = require('./config'),
+  security = require('../app/common/security');
 
 module.exports = function(app, passport) {
   app.set('showStackError', true);
@@ -33,7 +34,7 @@ module.exports = function(app, passport) {
 
     //express/mongo session storage
     app.use(express.session({
-      secret: 'p4l4vr4s3cr3t4',
+      secret: security.key,
       store: new mongoStore({
         url: config.db,
         collection: 'sessions'

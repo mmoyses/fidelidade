@@ -20,3 +20,5 @@ exports.decrypt = function(crypted) {
   var decrypted = dc.update(crypted, 'hex', 'utf8') + dc.final('utf8');
   return decrypted;
 };
+
+exports.key = key;
