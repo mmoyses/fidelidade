@@ -1,0 +1,29 @@
+extends ../layouts/default
+
+block content
+  .row
+    .span6
+      if message
+        p=message
+      if errors
+        p=errors
+      form.signup.form-horizontal(action='/empresas', method='post')
+        .control-group
+          label.control-label(for='nome') Nome
+          .controls
+            input#name(type='text', name='nome', placeholder='Nome', value=empresa.nome)
+
+        .control-group
+          label.control-label(for='tipo') Tipo
+          .controls
+            select#tipo(value=empresa.tipo)
+              option hotel
+
+        .control-group
+          label.control-label(for='true') Ativa
+            input#true(type='radio', name='ativa', value=empresa.ativa)
+          label.control-label(for='false') Inativa
+            input#false(type='radio', name='ativa', value=empresa.ativa)
+
+        .form-actions
+          button.btn.btn-primary(type='submit') Criar

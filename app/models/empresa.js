@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 var tipoEmpresa = 'hotel super'.split(' ');
 
 var EmpresaSchema = new Schema({
+  _id: String,
   nome: String,
   ativa: Boolean,
   tipo: { type: String, enum: tipoEmpresa, default: 'hotel' },

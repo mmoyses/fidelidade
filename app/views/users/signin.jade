@@ -1,12 +1,12 @@
 extends auth
 
 block auth
-  form.signin.form-horizontal(action="/usuarios/session", method="post")
+  form.signin.form-horizontal(action='usuarios/session', method='post')
     p.error= message
     .control-group
       label.control-label(for='email') Email
       .controls
-        input#email(type='text', name="email", placeholder='Email')
+        input#email(type='text', name='email', placeholder='Email')
 
     .control-group
       label.control-label(for='senha') Senha
@@ -17,4 +17,4 @@ block auth
       button.btn.btn-primary(type='submit') Entrar
       &nbsp;
       | ou&nbsp;
-      a.show-signup(href="/cadastrar") Cadastrar
+      a.show-signup(href='/cadastrar') Cadastrar

@@ -1,0 +1,36 @@
+extends ../layouts/default
+
+block content
+  .row
+    .span6
+      if message
+        p=message
+      if errors
+        p=errors
+      form.signup.form-horizontal(action='/empresa/'+empresa.id, method='post')
+        .control-group
+          label.control-label(for='nome') Nome
+          .controls
+            input#name(type='text', name='nome', placeholder='Nome', value=empresa.nome)
+
+        .control-group
+          label.control-label(for='tipo') Tipo
+          .controls
+            select#tipo(value=empresa.tipo)
+              option hotel
+
+        .control-group
+          label.control-label(for='true') Ativa
+            if empresa.ativa
+              input#true(type='radio', name='ativa', value='true' checked)
+            else
+              input#true(type='radio', name='ativa', value='true')
+          label.control-label(for='false') Inativa
+            if empresa.ativa
+              input#false(type='radio', name='ativa', value='false')
+            else
+              input#false(type='radio', name='ativa', value='false' checked)
+
+        .form-actions
+          input.btn.btn-primary(type='submit', name='op', value='Editar')
+          input.btn.btn-primary(type='submit', name='op', value='Remover')
