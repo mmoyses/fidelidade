@@ -1,4 +1,10 @@
-script(type='text/javascript', src='/lib/jquery/jquery.js')
+div#footer
+  div.container
+    - year = new Date().getFullYear()
+    p.muted.credit
+      | Programa de Recompensas© 2011–
+      =year
+      | – Todos os direitos reservados.
 
 //Bootstrap
 script(type='text/javascript', src='/lib/bootstrap/js/bootstrap.js')
@@ -20,10 +26,8 @@ script(type='text/javascript', src='/js/filters.js')
 
 //Application Services
 script(type='text/javascript', src='/js/services/global.js')
-script(type='text/javascript', src='/js/services/articles.js')
 
 //Application Controllers
-script(type='text/javascript', src='/js/controllers/articles.js')
 script(type='text/javascript', src='/js/controllers/index.js')
 script(type='text/javascript', src='/js/controllers/header.js')	
 script(type='text/javascript', src='/js/init.js')

@@ -1,1 +1,6 @@
 - associar usuário a empresa
+- controller usuario: create, delete, change role, update
+- controller cliente: create, delete, update, checkin, checkout, claim
+
+- views usuario
+- views cliente

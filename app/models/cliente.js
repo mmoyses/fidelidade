@@ -6,15 +6,15 @@ var HospedagemSchema = new Schema({
   _id: false,
   id: false,
   empresa: { type: Schema.Types.ObjectId, ref: 'Empresa' },
-  dataCheckin: Date,
-  dataCheckout: Date,
+  data_checkin: Date,
+  data_checkout: Date,
   pontos: Number
 });
 
 var ResgateSchema = new Schema({
   _id: false,
   id: false,
-  dataResgate: Date,
+  data_resgate: Date,
   pontos: Number
 });
 
@@ -32,7 +32,7 @@ var ClienteSchema = new Schema({
   email: String,
   hashed_password: String,
   empresa: String,
-  dataCadastro: Date,
+  data_cadastro: Date,
   quarto: String,
   observacoes: String,
   pontos: Number,
