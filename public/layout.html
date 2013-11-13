@@ -6,7 +6,15 @@
         <title>Test Layout</title>
         <link rel="stylesheet" type="text/css" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css">
-        <link rel="stylesheet" type="text/css" href="./public/css/layout.css">
+        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="./css/layout.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <script>
+          $(function() {
+            $("#date").datepicker();
+          });
+        </script>
     </head>
     <body>
       <div id="wrap">
@@ -31,7 +39,20 @@
             </div>
           </div>
         </div>
-        <div class="container"></div>
+        <div class="container main">
+          <form class="form-inline">
+            <fieldset>
+              <legend>Check-in</legend>
+              <input type="text" placeholder="Digite o ID…">
+              <button type="submit" class="btn">Procurar</button>
+            </fieldset>
+          </form>
+          <label>Data:</label>
+          <div id="date"></div>
+          <form class="form-button">
+            <button class="btn btn-primary">Check-in</button>
+          </form>
+        </div>
         <div id="push"></div>
       </div>
       <div id="footer">
@@ -39,6 +60,6 @@
           <p class="muted credit">Programa de Recompensas© 2011–2013 – Todos os direitos reservados.</p>
         </div>
       </div>
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      
     </body>
 </html>

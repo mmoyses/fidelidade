@@ -2,15 +2,6 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   security = require('../common/security');
 
-var HospedagemSchema = new Schema({
-  _id: false,
-  id: false,
-  empresa: { type: Schema.Types.ObjectId, ref: 'Empresa' },
-  data_checkin: Date,
-  data_checkout: Date,
-  pontos: Number
-});
-
 var ResgateSchema = new Schema({
   _id: false,
   id: false,
@@ -36,7 +27,7 @@ var ClienteSchema = new Schema({
   quarto: String,
   observacoes: String,
   pontos: Number,
-  hospedagens: [HospedagemSchema],
+  hospedagens: [{ type: Schema.Types.ObjectId, ref: 'Hospedagem' }],
   resgates: [ResgateSchema]
 });
 

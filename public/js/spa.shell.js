@@ -7,11 +7,11 @@ spa.shell = (function() {
       + '<div class="navbar navbar-fixed-top navbar-inverse">'
         + '<div class="navbar-inner" data-ng-controller="HeaderController">'
           + '<div class="container-fluid">'
-            + '<a class="brand" href="/">Programa de Recompensas</a>'
+            + '<a class="brand" href="#!/">Programa de Recompensas</a>'
             + '<div class="nav-collapse collapse">'
               + '<ul class="nav" id="menu">'
-                + '<li class="active"><a href="#!/"><i class="icon-home"></i></a></li>'
-                + '<li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">'
+                + '<li ng-class="{active: $uiRoute}"><a href="#!/"><i class="icon-home"></i></a></li>'
+                + '<li data-ng-repeat="item in menu" ui-route="#/{{item.link}}" ng-class="{active: $uiRoute}">'
                   + '<a href="#!/{{item.link}}">{{item.title}}</a>'
                 + '</li>'
               + '</ul>'
@@ -23,13 +23,13 @@ spa.shell = (function() {
       + '</div>'
       + '<div class="container"></div>'
       + '<div id="push"></div>'
-  },
-  stateMap = {
-    $container: null,
-    anchor_map: {}
-  },
-  jqueryMap = {},
-  copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, onResize, onTapAcct, onLogin, onLogout, setChatAnchor, initModule;
+    },
+    stateMap = {
+      $container: null,
+      anchor_map: {}
+    },
+    jqueryMap = {},
+    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, onResize, onTapAcct, onLogin, onLogout, setChatAnchor, initModule;
 
   copyAnchorMap = function() {
     return $.extend(true, {}, stateMap.anchor_map);
@@ -170,6 +170,8 @@ spa.shell = (function() {
     });
 
     $(window).bind('resize', onResize).bind('hashchange', onHashchange).trigger('hashchange');
+
+    spa.checkin.initModule($container.find('.container'));
   };
 
   return {
