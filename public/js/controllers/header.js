@@ -1,11 +1,26 @@
-angular.module('mean.system').controller('HeaderController', ['$scope', 'Global', function ($scope, Global) {
-    $scope.global = Global;
+angular.module('fidelidade.system').controller('HeaderController', ['$scope', 'Global', function ($scope, Global) {
+  $scope.global = Global;
 
-    $scope.menu = [{
-        "title": "Articles",
-        "link": "articles"
-    }, {
-        "title": "Create New Article",
-        "link": "articles/create"
-    }];
+  $scope.menu = [
+  {
+    title: 'Check-in',
+    link: 'checkin'
+  },
+  {
+    title: 'Check-out',
+    link: 'checkout'
+  },
+  {
+    title: 'Consultar',
+    link: 'consultar'
+  },
+  {
+    title: 'Usuários',
+    link: 'usuarios'
+  },
+  {
+    title: 'Relatórios',
+    link: 'relatorios'
+  }
+  ];
 }]);

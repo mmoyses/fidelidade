@@ -5,11 +5,15 @@ spa.shell = (function() {
     },
     main_html: String()
       + '<div class="navbar navbar-fixed-top navbar-inverse">'
-        + '<div class="navbar-inner">'
+        + '<div class="navbar-inner" data-ng-controller="HeaderController">'
           + '<div class="container-fluid">'
             + '<a class="brand" href="/">Programa de Recompensas</a>'
             + '<div class="nav-collapse collapse">'
               + '<ul class="nav" id="menu">'
+                + '<li class="active"><a href="#!/"><i class="icon-home"></i></a></li>'
+                + '<li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">'
+                  + '<a href="#!/{{item.link}}">{{item.title}}</a>'
+                + '</li>'
               + '</ul>'
               + '<ul class="nav pull-right" id="account">'
               + '</ul>'
