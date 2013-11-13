@@ -6,14 +6,18 @@ spa.checkin = (function() {
         + '<form class="form-inline">'
           + '<fieldset>'
             + '<legend>Check-in</legend>'
-            + '<input type="text" placeholder="Digite o ID…">'
+            + '<input type="text" id="id" name="id" placeholder="Digite o ID…">'
             + '<button type="submit" class="btn">Procurar</button>'
           + '</fieldset>'
         + '</form>'
-        + '<label>Data:</label>'
-        + '<div id="date"></div>'
-        + '<form class="form-button">'
-          + '<button class="btn btn-primary">Check-in</button>'
+        + '<form class="form-button form-horizontal">'
+          + '<div class="control-group">'
+            + '<label>Data:</label>'
+            + '<input type="text" id="date" name="date"/>'
+          + '</div>'
+          + '<div class="control-group">'
+            + '<button class="btn btn-primary">Check-in</button>'
+          + '</div>'
         + '</form>'
       + '</div>'
     },
@@ -27,13 +31,17 @@ spa.checkin = (function() {
     var $container = stateMap.$container;
     jqueryMap = {
       $container: $container,
-      $checkIn: $container.find('.check-in')
+      $checkIn: $container.find('.check-in'),
+      $client: $container.find("#id"),
+      $date: $container.find('#date')
     }
   };
 
   initModule = function($container) {
     stateMap.$container = $container;
     $container.html(configMap.main_html);
+    $("#date").mask('99/99/9999');
+    $("#date").datepicker({ dateFormat: "dd/mm/yy" });
     setJqueryMap();
   };
 

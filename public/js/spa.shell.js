@@ -1,18 +1,31 @@
 spa.shell = (function() {
   'use strict';
   var configMap = {
-    anchor_schema_map: {                                                                                                                                                                                                                     
+    anchor_schema_map: { 
+      page: {
+        home: true,
+        checkin: true,
+        checkout: true,
+        consultar: true,
+        usuarios: true,
+        relatorios: true
+      }                                                                                                                                                                                                                    
     },
     main_html: String()
       + '<div class="navbar navbar-fixed-top navbar-inverse">'
         + '<div class="navbar-inner" data-ng-controller="HeaderController">'
           + '<div class="container-fluid">'
-            + '<a class="brand" href="#!/">Programa de Recompensas</a>'
-            + '<div class="nav-collapse collapse">'
+            + '<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">'
+              + '<span class="icon-bar"></span>'
+              + '<span class="icon-bar"></span>'
+              + '<span class="icon-bar"></span>'
+            + '</a>'
+            + '<a class="brand" href="#!page=home">Programa de Recompensas</a>'
+            + '<div class="nav-collapse navbar-responsive-collapse collapse">'
               + '<ul class="nav" id="menu">'
-                + '<li ng-class="{active: $uiRoute}"><a href="#!/"><i class="icon-home"></i></a></li>'
-                + '<li data-ng-repeat="item in menu" ui-route="#/{{item.link}}" ng-class="{active: $uiRoute}">'
-                  + '<a href="#!/{{item.link}}">{{item.title}}</a>'
+                + '<li class="home"><a href="#!page=home"><i class="icon-home"></i></a></li>'
+                + '<li data-ng-repeat="item in menu" class="{{item.link}}">'
+                  + '<a href="#!page={{item.link}}">{{item.title}}</a>'
                 + '</li>'
               + '</ul>'
               + '<ul class="nav pull-right" id="account">'
@@ -29,7 +42,7 @@ spa.shell = (function() {
       anchor_map: {}
     },
     jqueryMap = {},
-    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, onResize, onTapAcct, onLogin, onLogout, setChatAnchor, initModule;
+    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, onResize, onTapAcct, onLogin, onLogout, setPageAnchor, initModule;
 
   copyAnchorMap = function() {
     return $.extend(true, {}, stateMap.anchor_map);
@@ -39,6 +52,7 @@ spa.shell = (function() {
     var $container = stateMap.$container;
     jqueryMap = {
       $container: $container,
+      $innerContainer: $container.find('.container'),
       $acc: $container.find('#account'),
       $nav: $container.find('#menu')
     };
@@ -78,8 +92,7 @@ spa.shell = (function() {
 
   onHashchange = function(event) {
     var anchor_map_previous = copyAnchorMap(),
-        is_ok = true,
-        anchor_map_proposed, _s_chat_previous, _s_chat_proposed, s_chat_proposed;
+        anchor_map_proposed, _s_page_previous, _s_page_proposed, s_page_proposed;
 
     try {
       anchor_map_proposed = $.uriAnchor.makeAnchorMap();
@@ -89,32 +102,18 @@ spa.shell = (function() {
     }
     stateMap.anchor_map = anchor_map_proposed;
 
-    _s_chat_previous = anchor_map_previous._s_chat;
-    _s_chat_proposed = anchor_map_proposed._s_chat;
+    _s_page_previous = anchor_map_previous._s_page;
+    _s_page_proposed = anchor_map_proposed._s_page;
 
-    if (!anchor_map_previous || _s_chat_previous !== _s_chat_proposed) {
-      s_chat_proposed = anchor_map_proposed.chat;
-      switch (s_chat_proposed) {
-        case 'opened':
-          is_ok = spa.chat.setSliderPosition('opened');
-          break;
-        case 'closed':
-          is_ok = spa.chat.setSliderPosition('closed');
-          break;
-        default:
-          spa.chat.setSliderPosition('closed');
-          delete anchor_map_proposed.chat;
-          $.uriAnchor.setAnchor(anchor_map_proposed, null, true);
-      }
-    }
-
-    if (!is_ok) {
-      if (anchor_map_previous) {
-        $.uriAnchor.setAnchor(anchor_map_previous, null, true);
-        stateMap.anchor_map = anchor_map_previous;
-      } else {
-        delete anchor_map_proposed.chat;
-        $.uriAnchor.setAnchor(anchor_map_proposed, null, true);
+    if (!anchor_map_previous || _s_page_previous !== _s_page_proposed) {
+      s_page_proposed = anchor_map_proposed.page;
+      if (s_page_proposed) {
+        if (spa[_s_page_previous]) {
+          jqueryMap.$nav.find('.' + _s_page_previous).toggleClass('active');
+          spa[_s_page_previous].removeComponent();
+        }
+        jqueryMap.$nav.find('.' + _s_page_proposed).toggleClass('active');
+        spa[s_page_proposed].initModule(jqueryMap.$innerContainer);
       }
     }
 
@@ -126,7 +125,6 @@ spa.shell = (function() {
       return true;
     }
 
-    spa.chat.handleResize();
     stateMap.resize_idto = setTimeout(function() {
       stateMap.resize_idto = undefined;
     }, configMap.resize_interval);
@@ -156,8 +154,8 @@ spa.shell = (function() {
     jqueryMap.$acct.text('Please sign-in');
   };
 
-  setChatAnchor = function(position_type) {
-    return changeAnchorPart({ chat: position_type });
+  setPageAnchor = function(position_type) {
+    return changeAnchorPart({ page: position_type });
   };
 
   initModule = function($container) {
@@ -171,7 +169,7 @@ spa.shell = (function() {
 
     $(window).bind('resize', onResize).bind('hashchange', onHashchange).trigger('hashchange');
 
-    spa.checkin.initModule($container.find('.container'));
+    setPageAnchor('home');
   };
 
   return {
