@@ -7,7 +7,7 @@ spa.checkout = (function() {
           + '<fieldset>'
             + '<legend>Check-out</legend>'
             + '<input type="text" id="id" name="id" placeholder="Digite o ID…">'
-            + '<button type="submit" class="btn">Procurar</button>'
+            + '<button type="submit" class="btn" id="search-btn" name="search">Procurar</button>'
           + '</fieldset>'
         + '</form>'
         + '<form class="form-button form-horizontal">'
@@ -16,7 +16,7 @@ spa.checkout = (function() {
             + '<input type="text" id="date" name="date"/>'
           + '</div>'
           + '<div class="control-group">'
-            + '<button class="btn btn-primary">Check-out</button>'
+            + '<button class="btn btn-primary" id="checkout-btn" name="checkout">Check-out</button>'
           + '</div>'
         + '</form>'
       + '</div>',
@@ -36,7 +36,9 @@ spa.checkout = (function() {
     jqueryMap = {
       $container: $container,
       $checkOut: $container.find('.check-out'),
-      $client: $container.find("#id"),
+      $client: $container.find('#id'),
+      $searchBtn: $container.find('#search-btn'),
+      $checkOutBtn: $container.find('#checkout-btn'),
       $date: $container.find('#date')
     }
   };
@@ -54,9 +56,9 @@ spa.checkout = (function() {
   initModule = function($container) {
     stateMap.$container = $container;
     $container.html(configMap.main_html);
-    $("#date").mask('99/99/9999');
-    $("#date").datepicker({ dateFormat: "dd/mm/yy" });
     setJqueryMap();
+    jqueryMap.$date.mask('99/99/9999');
+    jqueryMap.$date.datepicker({ dateFormat: 'dd/mm/yy' });
   };
 
   removeComponent = function() {

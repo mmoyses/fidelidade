@@ -1,6 +1,6 @@
 spa.fake = (function() {
   'use strict';
-  var getClientList, getClient, _clients;
+  var getClientList, getClient, _clients, mockSio;
 
   _clients = [
     { _id:"9982442", nome:"GUILHERME RIBEIRO ESPINOSA COSTA", documento: "111.466.247-00", endereco: "RUA SIDNEY VASCONCELOS AGUIAR, Nº 1047 APTO 505A", bairro: "GLÓRIA", cidade: "MACAÉ", estado: "RJ", cep: "27937-010", celular: "(22) 9946-7508", email: "guilherme.espinosa@yahoo.com.br", data_cadastro: new Date("2013-08-20 04:47:33"), hashed_password: "3CD377C7F7AA56D49F67CFEC515921C5", pontos: 0 },
@@ -35,8 +35,38 @@ spa.fake = (function() {
     return null;
   };
 
+  mockSio = (function() {
+    var on_sio, emit_sio,
+        callback_map = {};
+
+    on_sio = function(msg_type, callback) {
+      callback_map[msg_type] = callback;
+    };
+
+    emit_sio = function(msg_type, data) {
+      if (msg_type === 'getclient' && callback_map.getclient) {
+        setTimeout(function() {
+          var client = getClient(data.id),
+              client_map = {};
+          if (client) {
+            client_map.id = client._id,
+            client_map.nome = client.nome
+          } else {
+            client_map.msg = 'Não existe cliente com esse id';
+          }
+          callback_map.getclient(client_map);
+        }, 1000);
+      }
+    };
+
+    return {
+      emit: emit_sio,
+      on: on_sio
+    };
+
+  }());
+
   return {
-    getClientList: getClientList,
-    getClient: getClient
+    mockSio: mockSio
   }
 }());

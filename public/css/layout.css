@@ -42,3 +42,11 @@ code {
 .form-button {
   margin-top: 20px;
 }
+
+.help-block {
+  margin-top: 10px;
+}
+
+.help-block.text-error {
+  color: #b94a48;
+}
