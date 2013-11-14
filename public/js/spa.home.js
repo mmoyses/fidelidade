@@ -3,7 +3,7 @@ spa.home = (function() {
   var configMap = {
     main_html: String()
       + '<div class="main">'
-        + '<h1>Hello World</h1>'
+        + '<h1>Bem vindo ao Programa de Recompensas</h1>'
       + '</div>'
     },
     stateMap = {

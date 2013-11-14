@@ -167,6 +167,13 @@ spa.shell = (function() {
       schema_map: configMap.anchor_schema_map
     });
 
+    spa.checkin.configModule({
+      client_model: spa.model.client
+    });
+    spa.checkout.configModule({
+      client_model: spa.model.client
+    });
+
     $(window).bind('resize', onResize).bind('hashchange', onHashchange).trigger('hashchange');
 
     setPageAnchor('home');

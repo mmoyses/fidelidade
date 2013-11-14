@@ -11,10 +11,6 @@ angular.module('fidelidade.system').controller('HeaderController', ['$scope', 'G
     link: 'checkout'
   },
   {
-    title: 'Consultar',
-    link: 'consultar'
-  },
-  {
     title: 'Usuários',
     link: 'usuarios'
   },

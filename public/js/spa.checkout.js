@@ -1,7 +1,7 @@
 spa.checkout = (function() {
   'use strict';
   var configMap = {
-    main_html: String()
+      main_html: String()
       + '<div class="check-out">'
         + '<form class="form-inline">'
           + '<fieldset>'
@@ -19,13 +19,17 @@ spa.checkout = (function() {
             + '<button class="btn btn-primary">Check-out</button>'
           + '</div>'
         + '</form>'
-      + '</div>'
+      + '</div>',
+      settable_map: {
+        client_model: true
+      },
+      client_model: null
     },
     stateMap = {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, initModule, removeComponent;
+    setJqueryMap, configModule, initModule, removeComponent;
 
   setJqueryMap = function () {
     var $container = stateMap.$container;
@@ -35,6 +39,16 @@ spa.checkout = (function() {
       $client: $container.find("#id"),
       $date: $container.find('#date')
     }
+  };
+
+  configModule = function(input_map) {
+    spa.util.setConfigMap({
+      input_map: input_map,
+      settable_map: configMap.settable_map,
+      config_map: configMap
+    });
+
+    return true;
   };
 
   initModule = function($container) {
@@ -55,6 +69,7 @@ spa.checkout = (function() {
 
   return {
     initModule: initModule,
-    removeComponent: removeComponent
+    removeComponent: removeComponent,
+    configModule: configModule
   };
 }()); 
