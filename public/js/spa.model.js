@@ -6,10 +6,14 @@ spa.model = (function() {
       client, initModule;
 
   client = (function() {
-    var getList, getClient, init, _publish_getclient;
+    var getList, getClient, checkIn, init, _publish_getclient, _publish_checkin;
 
     _publish_getclient = function(client_map) {
       $.gevent.publish('spa-getclient', [client_map]);
+    };
+
+    _publish_checkin = function(arguments) {
+      // body...
     };
 
     getList = function() {
@@ -27,6 +31,13 @@ spa.model = (function() {
       return true;
     };
 
+    checkIn = function(id, date) {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.on('checkin', _publish_checkin);
+    };
+
     init = function() {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
@@ -37,6 +48,7 @@ spa.model = (function() {
     return {
       getList: getList,
       getClient: getClient,
+      checkIn: checkIn,
       init: init
     }
   }());

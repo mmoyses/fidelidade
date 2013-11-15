@@ -14,7 +14,7 @@ spa.checkin = (function() {
         + '<form class="form-button form-horizontal">'
           + '<div class="control-group">'
             + '<label>Data:</label>'
-            + '<input type="text" id="date" name="date"/>'
+            + '<input type="text" id="date" name="date" disabled="disabled"/>'
           + '</div>'
           + '<div class="control-group">'
             + '<button class="btn btn-primary" disabled="disabled">Check-in</button>'
@@ -30,7 +30,7 @@ spa.checkin = (function() {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, onSubmitClient, onSubmitCheckin, onGetClient, configModule, initModule, removeComponent;
+    setJqueryMap, onSubmitClient, onSubmitCheckin, onGetClient, onDateChange, configModule, initModule, removeComponent;
 
   setJqueryMap = function () {
     var $container = stateMap.$container;
@@ -54,7 +54,7 @@ spa.checkin = (function() {
         jqueryMap.$helpBlock.html(msg).addClass('text-error');
       } else {
         jqueryMap.$helpBlock.html(client_map.nome);
-        jqueryMap.$checkInBtn.removeAttr('disabled');;
+        jqueryMap.$date.removeAttr('disabled');
       }
     }
   }
@@ -63,7 +63,9 @@ spa.checkin = (function() {
     var client,
         id = jqueryMap.$client.val();
     jqueryMap.$helpBlock.html('&nbsp;').removeClass('text-error');
+    jqueryMap.$date.val('');
     jqueryMap.$checkInBtn.attr('disabled','disabled');
+    jqueryMap.$date.attr('disabled','disabled');
     if (id.trim() === '') {
       return false;
     }
@@ -73,7 +75,25 @@ spa.checkin = (function() {
   };
 
   onSubmitCheckin = function() {
-    console.log('aqui');
+    var date = jqueryMap.$date.val(),
+        id = jqueryMap.$client.val(),
+        d, checkInDate, month;
+    if (date.match(/\d{2}\/\d{2}\/\d{4}/) && id.trim() !== '') {
+      d = date.split('/');
+      month = Number(d[1]) - 1;
+      checkInDate = new Date(d[2], month, d[0], '12', '00', '00');
+      configMap.client_model.checkIn(id, checkInDate);
+    }
+
+    return false;
+  };
+
+  onDateChange = function() {
+    var date = jqueryMap.$date.val();
+    if (date.length >= 10)
+      jqueryMap.$checkInBtn.removeAttr('disabled');
+    else
+      jqueryMap.$checkInBtn.attr('disabled','disabled');
     return false;
   };
 
@@ -95,6 +115,7 @@ spa.checkin = (function() {
     jqueryMap.$date.datepicker({ dateFormat: 'dd/mm/yy' });
     jqueryMap.$formClient.bind('submit', onSubmitClient);
     jqueryMap.$formCheckIn.bind('submit', onSubmitCheckin);
+    jqueryMap.$date.bind('change', onDateChange);
 
     $.gevent.subscribe(jqueryMap.$formClient, 'spa-getclient', onGetClient);
   };
