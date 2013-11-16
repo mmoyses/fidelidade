@@ -13,6 +13,9 @@ head
   link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css')
   link(rel='stylesheet', href='/css/layout.css')
 
+  // if lt IE 9
+    script(type='text/javascript', src='/lib/html5shiv/html5shiv.js')
+
   script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
 
   script(type='text/javascript', src='/js/spa.js')
@@ -24,5 +27,6 @@ head
   script(type='text/javascript', src='/js/spa.home.js')
   script(type='text/javascript', src='/js/spa.checkin.js')
   script(type='text/javascript', src='/js/spa.checkout.js')
+  script(type='text/javascript', src='/js/spa.user.js')
 
   block init

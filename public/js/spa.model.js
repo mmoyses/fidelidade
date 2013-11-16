@@ -3,7 +3,7 @@ spa.model = (function() {
   var configMap = {},
       stateMap = {},
       isFakeData = true,
-      client, hospedagem, initModule;
+      client, hospedagem, user, initModule;
 
   client = (function() {
     var getList, getClient, checkIn, init, _publish_getclient, _publish_checkin;
@@ -94,14 +94,43 @@ spa.model = (function() {
     };
   }());
 
+  user = (function() {
+    var getUser, _publish_getuser, init;
+
+    _publish_getuser = function(user_map) {
+      $.gevent.publish('spa-getuser', [user_map]);
+    };
+
+    getUser = function() {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.emit('getuser', {});
+    };
+
+    init = function() {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.on('getuser', _publish_getuser);
+    };
+
+    return {
+      getUser: getUser,
+      init: init
+    };
+  }());
+
   initModule = function() {
     client.init();
     hospedagem.init();
+    user.init();
   };
 
   return {
     initModule: initModule,
     client: client,
-    hospedagem: hospedagem
+    hospedagem: hospedagem,
+    user: user
   };
 }());

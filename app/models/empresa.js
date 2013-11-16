@@ -9,7 +9,8 @@ var EmpresaSchema = new Schema({
   ativa: Boolean,
   tipo: { type: String, enum: tipoEmpresa, default: 'hotel' },
   textoVoucher: String,
-  pontuacao: Number
+  pontuacao: Number,
+  imagem: String
 });
 
 mongoose.model('Empresa', EmpresaSchema, 'empresa');

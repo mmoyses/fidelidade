@@ -1,0 +1,32 @@
+extends layouts/default
+
+block init
+  link(rel='stylesheet', href='/css/login.css')
+
+block main
+  div.navbar.navbar-fixed-top.navbar-inverse
+    div.navbar-inner
+      div.container-fluid
+        a.brand(href='/') Programa de Recompensas
+        form.navbar-form.navbar-right(action='/entrar', method='post')
+          div.form-group
+            input.form-control.input-medium(type='text', name='email', placeholder='Email')
+          div.form-group
+            input.form-control.input-medium(type='password', name='senha', placeholder='Senha')
+            if error
+              button.btn.btn-danger(type='submit') Entrar
+            else
+              button.btn.btn-success(type='submit') Entrar
+  p.text-right.text-error!= msg
+  div.main.container
+    div.content
+      div.row
+        div.login-form
+          h2 Crie uma conta
+          form(action='/usuarios')
+            fieldset
+              div.clearfix
+                input(type='text', placeholder='Email')
+              div.clearfix
+                input(type='password', placeholder='Senha')
+              button.btn.btn-primary(type='submit') Criar

@@ -32,10 +32,6 @@ exports.signout = function(req, res) {
   res.redirect('/');
 };
 
-exports.session = function(req, res) {
-  res.redirect('/');
-};
-
 exports.create = function(req, res, next) {
   var usuario = new Usuario(extractUserContent(req.body));
   usuario.save(function(err, usuario) {

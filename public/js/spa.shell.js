@@ -13,7 +13,7 @@ spa.shell = (function() {
     },
     main_html: String()
       + '<div class="navbar navbar-fixed-top navbar-inverse">'
-        + '<div class="navbar-inner" data-ng-controller="HeaderController">'
+        + '<div class="navbar-inner">'
           + '<div class="container-fluid">'
             + '<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">'
               + '<span class="icon-bar"></span>'
@@ -25,7 +25,14 @@ spa.shell = (function() {
               + '<ul class="nav" id="menu">'
                 + '<li class="home"><a href="#!page=home"><i class="icon-home"></i></a></li>'
               + '</ul>'
-              + '<ul class="nav pull-right" id="account">'
+              + '<ul class="nav pull-right">'
+                + '<li class="divider-vertical"></li>'
+                + '<li class="dropdown">'
+                  + '<a class="dropdown-toggle" data-toggle="dropdown" href="#"></a>'
+                  + '<ul class="dropdown-menu">'
+                    + '<li><a href="/sair">Sair</a></li>'
+                  + '</ul>'
+                + '</li>'
               + '</ul>'
             + '</div>'
           + '</div>'
@@ -39,7 +46,7 @@ spa.shell = (function() {
       anchor_map: {}
     },
     jqueryMap = {},
-    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, onResize, onTapAcct, onLogin, onLogout, setPageAnchor, setMenu, initModule;
+    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, setPageAnchor, initModule;
 
   copyAnchorMap = function() {
     return $.extend(true, {}, stateMap.anchor_map);
@@ -49,9 +56,8 @@ spa.shell = (function() {
     var $container = stateMap.$container;
     jqueryMap = {
       $container: $container,
-      $innerContainer: $container.find('.container'),
-      $acc: $container.find('#account'),
-      $menu: $container.find('#menu')
+      $menu: $container.find('#menu'),
+      $innerContainer: $container.find('.container')
     };
   };
 
@@ -117,70 +123,8 @@ spa.shell = (function() {
     return false;
   };
 
-  onResize = function() {
-    if (stateMap.resize_idto) {
-      return true;
-    }
-
-    stateMap.resize_idto = setTimeout(function() {
-      stateMap.resize_idto = undefined;
-    }, configMap.resize_interval);
-
-    return true;
-  };
-
-  onTapAcct = function(event) {
-    var acct_text, user_name,
-        user = spa.model.people.get_user();
-    if (user.get_is_anon()) {
-      user_name = prompt('Please sign-in');
-      spa.model.people.login(user_name);
-      jqueryMap.$acct.text('... processing ...');
-    } else {
-      spa.model.people.logout();
-    }
-
-    return false;
-  };
-
-  onLogin = function(event, login_user) {
-    jqueryMap.$acct.text(login_user.name);
-  };
-
-  onLogout = function(event, logout_user) {
-    jqueryMap.$acct.text('Please sign-in');
-  };
-
   setPageAnchor = function(position_type) {
     return changeAnchorPart({ page: position_type });
-  };
-
-  setMenu = function() {
-    var i, link, title,
-        menu = [
-          {
-            link: 'checkin',
-            title: 'Check-in'
-          },
-          {
-            link: 'checkout',
-            title: 'Check-out'
-          },
-          {
-            link: 'usuarios',
-            title: 'Usuários'
-          },
-          {
-            link: 'relatorios',
-            title: 'Relatórios'
-          }
-        ];
-
-    for (i = 0; i < menu.length; i++) {
-      link = menu[i].link;
-      title = menu[i].title;
-      jqueryMap.$menu.append('<li class="' + link + '"><a href="#!page=' + link + '">' + title + '</a></li>');
-    }
   };
 
   initModule = function($container) {
@@ -199,10 +143,12 @@ spa.shell = (function() {
       client_model: spa.model.client,
       hospedagem_model: spa.model.hospedagem
     });
+    spa.user.configModule({
+      user_model: spa.model.user
+    });
+    spa.user.initModule($container);
 
-    setMenu();
-
-    $(window).bind('resize', onResize).bind('hashchange', onHashchange).trigger('hashchange');
+    $(window).bind('hashchange', onHashchange).trigger('hashchange');
 
     setPageAnchor('home');
   };
