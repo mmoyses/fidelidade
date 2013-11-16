@@ -50,3 +50,11 @@ code {
 .help-block.text-error {
   color: #b94a48;
 }
+
+.help-inline.text-error {
+  color: #b94a48;
+}
+
+.help-inline.text-success {
+  color: #468847;
+}

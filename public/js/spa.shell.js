@@ -24,9 +24,6 @@ spa.shell = (function() {
             + '<div class="nav-collapse navbar-responsive-collapse collapse">'
               + '<ul class="nav" id="menu">'
                 + '<li class="home"><a href="#!page=home"><i class="icon-home"></i></a></li>'
-                + '<li data-ng-repeat="item in menu" class="{{item.link}}">'
-                  + '<a href="#!page={{item.link}}">{{item.title}}</a>'
-                + '</li>'
               + '</ul>'
               + '<ul class="nav pull-right" id="account">'
               + '</ul>'
@@ -42,7 +39,7 @@ spa.shell = (function() {
       anchor_map: {}
     },
     jqueryMap = {},
-    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, onResize, onTapAcct, onLogin, onLogout, setPageAnchor, initModule;
+    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, onResize, onTapAcct, onLogin, onLogout, setPageAnchor, setMenu, initModule;
 
   copyAnchorMap = function() {
     return $.extend(true, {}, stateMap.anchor_map);
@@ -54,7 +51,7 @@ spa.shell = (function() {
       $container: $container,
       $innerContainer: $container.find('.container'),
       $acc: $container.find('#account'),
-      $nav: $container.find('#menu')
+      $menu: $container.find('#menu')
     };
   };
 
@@ -109,10 +106,10 @@ spa.shell = (function() {
       s_page_proposed = anchor_map_proposed.page;
       if (s_page_proposed) {
         if (spa[_s_page_previous]) {
-          jqueryMap.$nav.find('.' + _s_page_previous).toggleClass('active');
+          jqueryMap.$menu.find('.' + _s_page_previous).removeClass('active');
           spa[_s_page_previous].removeComponent();
         }
-        jqueryMap.$nav.find('.' + _s_page_proposed).toggleClass('active');
+        jqueryMap.$menu.find('.' + _s_page_proposed).addClass('active');
         spa[s_page_proposed].initModule(jqueryMap.$innerContainer);
       }
     }
@@ -158,6 +155,34 @@ spa.shell = (function() {
     return changeAnchorPart({ page: position_type });
   };
 
+  setMenu = function() {
+    var i, link, title,
+        menu = [
+          {
+            link: 'checkin',
+            title: 'Check-in'
+          },
+          {
+            link: 'checkout',
+            title: 'Check-out'
+          },
+          {
+            link: 'usuarios',
+            title: 'Usuários'
+          },
+          {
+            link: 'relatorios',
+            title: 'Relatórios'
+          }
+        ];
+
+    for (i = 0; i < menu.length; i++) {
+      link = menu[i].link;
+      title = menu[i].title;
+      jqueryMap.$menu.append('<li class="' + link + '"><a href="#!page=' + link + '">' + title + '</a></li>');
+    }
+  };
+
   initModule = function($container) {
     stateMap.$container = $container;
     $container.html(configMap.main_html);
@@ -171,8 +196,11 @@ spa.shell = (function() {
       client_model: spa.model.client
     });
     spa.checkout.configModule({
-      client_model: spa.model.client
+      client_model: spa.model.client,
+      hospedagem_model: spa.model.hospedagem
     });
+
+    setMenu();
 
     $(window).bind('resize', onResize).bind('hashchange', onHashchange).trigger('hashchange');
 

@@ -1,6 +1,6 @@
 spa.fake = (function() {
   'use strict';
-  var getClientList, getClient, _clients, mockSio;
+  var getClientList, getClient, _clients, _hospedagens, getHospedagemList, mockSio;
 
   _clients = [
     { _id:"9982442", nome:"GUILHERME RIBEIRO ESPINOSA COSTA", documento: "111.466.247-00", endereco: "RUA SIDNEY VASCONCELOS AGUIAR, Nº 1047 APTO 505A", bairro: "GLÓRIA", cidade: "MACAÉ", estado: "RJ", cep: "27937-010", celular: "(22) 9946-7508", email: "guilherme.espinosa@yahoo.com.br", data_cadastro: new Date("2013-08-20 04:47:33"), hashed_password: "3CD377C7F7AA56D49F67CFEC515921C5", pontos: 0 },
@@ -21,6 +21,13 @@ spa.fake = (function() {
     { _id:"9982457", nome:"JEFFERSON OLIVEIRA PIMENTEL", documento: "052.922.259-08", endereco: "RUA JOSE GOMES HENRIQUE N 90", bairro: "PARQUE DAS BANDEIRA GLEBA 2", cidade: "SAO VICENTE", estado: "SP", cep: "11346-180", telefone: "013 3566 7447", celular: "013 98137 7400", email: "jeffersonoliveirapimentel@gmail.com", data_cadastro: new Date("2013-10-15 10:32:07"), hashed_password: "96FC78FE153663B4D5F730567DF550A4", pontos: 0 }
   ];
 
+  _hospedagens = [
+    { id: 0, client: 'RUBEM RECH', date: '01/10/2013' },
+    { id: 1, client: 'CRISTIANE ESMERALDO OLIVEIRA E SILVA', date: '01/11/2013' },
+    { id: 2, client: 'SERGIO LUIZ DO AMARAL LOZOVEY', date: '12/11/2013' },
+    { id: 3, client: 'MARCOS HUBER MENDES', date: '15/11/2013' }
+  ];
+
   getClientList = function() {
     return _clients;
   };
@@ -33,6 +40,10 @@ spa.fake = (function() {
     }
 
     return null;
+  };
+
+  getHospedagemList = function(hotel_id) {
+    return _hospedagens;
   };
 
   mockSio = (function() {
@@ -52,9 +63,51 @@ spa.fake = (function() {
             client_map.id = client._id,
             client_map.nome = client.nome
           } else {
-            client_map.msg = 'Não existe cliente com esse id';
+            client_map.error = 'Não existe cliente com esse id';
           }
           callback_map.getclient(client_map);
+        }, 1000);
+      }
+
+      if (msg_type === 'checkin' && callback_map.checkin) {
+        setTimeout(function() {
+          var id = data.id,
+              date = data.date,
+              checkin_map = {};
+          if (id && date) {
+            checkin_map.msg = 'Check-in realizado com sucesso';
+          } else {
+            checkin_map.error = 'Não foi possível fazer check-in do cliente ' + id;
+          }
+          callback_map.checkin(checkin_map);
+        }, 1000);
+      }
+
+      if (msg_type === 'getactivelist' && callback_map.getactivelist) {
+        setTimeout(function() {
+          var id = data.hotel,
+              hospedagem_map = {};
+          if (id) {
+            hospedagem_map.hospedagens = getHospedagemList();
+          } else {
+            hospedagem_map.error = 'Não há hospedagens em aberto';
+          }
+          callback_map.getactivelist(hospedagem_map);
+        }, 1000);
+      }
+
+      if (msg_type === 'checkout' && callback_map.checkout) {
+        setTimeout(function() {
+          var id = data.id,
+              date = data.date,
+              checkout_map = {};
+          if (id && date) {
+            checkout_map.msg = 'Check-out realizado com sucesso';
+            checkout_map.id = id;
+          } else {
+            checkout_map.error = 'Não foi possível fazer check-out';
+          }
+          callback_map.checkout(checkout_map);
         }, 1000);
       }
     };

@@ -6,8 +6,10 @@ spa.checkin = (function() {
         + '<form class="form-inline">'
           + '<fieldset>'
             + '<legend>Check-in</legend>'
-            + '<input type="text" id="id" name="id" placeholder="Digite o ID…">'
-            + '<button type="submit" class="btn">Procurar</button>'
+            + '<div class="control-group">'
+              + '<input type="text" id="id" name="id" placeholder="Digite o ID…">'
+              + '<button type="submit" class="btn">Procurar</button>'
+            + '</div>'
             + '<span class="help-block">&nbsp;</span>'
           + '</fieldset>'
         + '</form>'
@@ -18,6 +20,7 @@ spa.checkin = (function() {
           + '</div>'
           + '<div class="control-group">'
             + '<button class="btn btn-primary" disabled="disabled">Check-in</button>'
+            + '<span class="help-inline"></span>'
           + '</div>'
         + '</form>'
       + '</div>',
@@ -30,9 +33,9 @@ spa.checkin = (function() {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, onSubmitClient, onSubmitCheckin, onGetClient, onDateChange, configModule, initModule, removeComponent;
+    setJqueryMap, onSubmitClient, onSubmitCheckin, onGetClient, onDateChange, onCheckIn, configModule, initModule, removeComponent;
 
-  setJqueryMap = function () {
+  setJqueryMap = function() {
     var $container = stateMap.$container;
     jqueryMap = {
       $container: $container,
@@ -42,16 +45,19 @@ spa.checkin = (function() {
       $formCheckIn: $container.find('.form-button'),
       $date: $container.find('#date'),
       $helpBlock: $container.find('.help-block'),
-      $checkInBtn: $container.find('.btn-primary')
+      $checkInBtn: $container.find('.btn-primary'),
+      $controlGroupClient: $container.find('.form-inline .control-group'),
+      $helpInline: $container.find('.form-button .help-inline')
     }
   };
 
   onGetClient = function(event, client_map) {
-    var msg;
+    var error;
     if (client_map) {
-      msg = client_map.msg;
-      if (msg) {
-        jqueryMap.$helpBlock.html(msg).addClass('text-error');
+      error = client_map.error;
+      if (error) {
+        jqueryMap.$helpBlock.html(error).addClass('text-error');
+        jqueryMap.$controlGroupClient.addClass('error');
       } else {
         jqueryMap.$helpBlock.html(client_map.nome);
         jqueryMap.$date.removeAttr('disabled');
@@ -66,6 +72,7 @@ spa.checkin = (function() {
     jqueryMap.$date.val('');
     jqueryMap.$checkInBtn.attr('disabled','disabled');
     jqueryMap.$date.attr('disabled','disabled');
+    jqueryMap.$controlGroupClient.removeClass('error');
     if (id.trim() === '') {
       return false;
     }
@@ -83,6 +90,8 @@ spa.checkin = (function() {
       month = Number(d[1]) - 1;
       checkInDate = new Date(d[2], month, d[0], '12', '00', '00');
       configMap.client_model.checkIn(id, checkInDate);
+      jqueryMap.$helpInline.attr('class', 'help-inline');
+      jqueryMap.$helpInline.html('');
     }
 
     return false;
@@ -95,6 +104,23 @@ spa.checkin = (function() {
     else
       jqueryMap.$checkInBtn.attr('disabled','disabled');
     return false;
+  };
+
+  onCheckIn = function(event, checkin_map) {
+    var msg, error;
+    if (checkin_map) {
+      msg = checkin_map.msg;
+      if (msg) {
+        jqueryMap.$helpInline.addClass('text-success');
+        jqueryMap.$helpInline.html(msg);
+      } else {
+        error = checkin_map.error;
+        if (error) {
+          jqueryMap.$helpInline.addClass('text-error');
+          jqueryMap.$helpInline.html(error);
+        }
+      }
+    }
   };
 
   configModule = function(input_map) {
@@ -118,6 +144,7 @@ spa.checkin = (function() {
     jqueryMap.$date.bind('change', onDateChange);
 
     $.gevent.subscribe(jqueryMap.$formClient, 'spa-getclient', onGetClient);
+    $.gevent.subscribe(jqueryMap.$formCheckIn, 'spa-checkin', onCheckIn);
   };
 
   removeComponent = function() {

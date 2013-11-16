@@ -3,7 +3,7 @@ spa.model = (function() {
   var configMap = {},
       stateMap = {},
       isFakeData = true,
-      client, initModule;
+      client, hospedagem, initModule;
 
   client = (function() {
     var getList, getClient, checkIn, init, _publish_getclient, _publish_checkin;
@@ -12,8 +12,8 @@ spa.model = (function() {
       $.gevent.publish('spa-getclient', [client_map]);
     };
 
-    _publish_checkin = function(arguments) {
-      // body...
+    _publish_checkin = function(checkin_map) {
+      $.gevent.publish('spa-checkin', [checkin_map]);
     };
 
     getList = function() {
@@ -35,7 +35,7 @@ spa.model = (function() {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;
-      sio.on('checkin', _publish_checkin);
+      sio.emit('checkin', { id: id, date: date });
     };
 
     init = function() {
@@ -43,6 +43,7 @@ spa.model = (function() {
       if (!sio)
         return false;
       sio.on('getclient', _publish_getclient);
+      sio.on('checkin', _publish_checkin);
     };
 
     return {
@@ -53,13 +54,55 @@ spa.model = (function() {
     }
   }());
 
+  hospedagem = (function() {
+    var getActiveList, _publish_getactivelist, checkOut, _publish_checkout, init;
+
+    getActiveList = function(hotel_id) {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.emit('getactivelist', { hotel: hotel_id });
+    };
+
+    _publish_getactivelist = function(hospedagem_map) {
+      $.gevent.publish('spa-getactivelist', [hospedagem_map]);
+    };
+
+    checkOut = function(id, date) {
+      console.log('model');
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.emit('checkout', { id: id, date: date });
+    };
+
+    _publish_checkout = function(checkout_map) {
+      $.gevent.publish('spa-checkout', [checkout_map]);
+    }
+
+    init = function() {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.on('getactivelist', _publish_getactivelist);
+      sio.on('checkout', _publish_checkout);
+    };
+
+    return {
+      getActiveList: getActiveList,
+      init: init,
+      checkOut: checkOut
+    };
+  }());
+
   initModule = function() {
     client.init();
+    hospedagem.init();
   };
 
   return {
     initModule: initModule,
-    client: client
+    client: client,
+    hospedagem: hospedagem
   };
-
 }());
