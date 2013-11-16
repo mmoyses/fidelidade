@@ -69,7 +69,6 @@ spa.model = (function() {
     };
 
     checkOut = function(id, date) {
-      console.log('model');
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;

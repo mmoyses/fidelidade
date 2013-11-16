@@ -72,9 +72,16 @@ spa.fake = (function() {
       if (msg_type === 'checkin' && callback_map.checkin) {
         setTimeout(function() {
           var id = data.id,
+              client = getClient(id),
               date = data.date,
-              checkin_map = {};
-          if (id && date) {
+              checkin_map = {},
+              lastId, length, d, hospedagens;
+          if (client && date) {
+            d = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+            hospedagens = getHospedagemList();
+            length = hospedagens.length;
+            lastId = hospedagens[length - 1].id;
+            hospedagens.push({ id: lastId + 1, client: client.nome, date: d });
             checkin_map.msg = 'Check-in realizado com sucesso';
           } else {
             checkin_map.error = 'Não foi possível fazer check-in do cliente ' + id;
@@ -98,10 +105,19 @@ spa.fake = (function() {
 
       if (msg_type === 'checkout' && callback_map.checkout) {
         setTimeout(function() {
-          var id = data.id,
+          var id = Number(data.id),
               date = data.date,
-              checkout_map = {};
+              checkout_map = {},
+              i, index, hospedagens;
           if (id && date) {
+            hospedagens = getHospedagemList();
+            for (i = 0; i < hospedagens.length; i++) {
+              if (hospedagens[i].id === id) {
+                index = i;
+                break;
+              }
+            }
+            hospedagens.splice(index, 1);
             checkout_map.msg = 'Check-out realizado com sucesso';
             checkout_map.id = id;
           } else {
