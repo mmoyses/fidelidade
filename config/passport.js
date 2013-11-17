@@ -11,31 +11,31 @@ module.exports = function(passport) {
   passport.deserializeUser(function(id, done) {
     Usuario.findOne({
       _id: id
-    }, { _id: 1, nome: 1, email: 1, empresa: 1 }, function(err, user) {
+    }, { _id: 1, nome: 1, email: 1, username: 1, empresa: 1 }, function(err, user) {
       done(err, user);
     });
   });
 
   //Use local strategy
   passport.use(new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'username',
     passwordField: 'senha'
   },
-  function(email, password, done) {
+  function(username, password, done) {
     Usuario.findOne({
-      email: email
+      username: username
     }, function(err, user) {
       if (err) {
         return done(err);
       }
       if (!user) {
         return done(null, false, {
-          message: 'Email ou senha inválida.'
+          message: 'Usuário ou senha inválida!'
         });
       }
       if (!user.authenticate(password)) {
         return done(null, false, {
-          message: 'Email ou senha inválida.'
+          message: 'Usuário ou senha inválida!'
         });
       }
       return done(null, user);

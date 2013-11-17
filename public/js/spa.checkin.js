@@ -6,22 +6,21 @@ spa.checkin = (function() {
         + '<form class="form-inline">'
           + '<fieldset>'
             + '<legend>Check-in</legend>'
-            + '<div class="control-group">'
-              + '<input type="text" id="id" name="id" placeholder="Digite o ID…">'
-              + '<button type="submit" class="btn">Procurar</button>'
+            + '<div class="form-group">'
+              + '<label class="sr-only" for="id">Id do cliente</label>'
+              + '<input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">'
             + '</div>'
+            + '<button type="submit" class="btn btn-default">Procurar</button>'
             + '<span class="help-block">&nbsp;</span>'
           + '</fieldset>'
         + '</form>'
-        + '<form class="form-button form-horizontal">'
-          + '<div class="control-group">'
-            + '<label>Data:</label>'
-            + '<input type="text" id="date" name="date" disabled="disabled"/>'
+        + '<form class="form-checkin">'
+          + '<div class="form-group">'
+            + '<label for="date">Data</label>'
+            + '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>'
           + '</div>'
-          + '<div class="control-group">'
-            + '<button class="btn btn-primary" disabled="disabled">Check-in</button>'
-            + '<span class="help-inline"></span>'
-          + '</div>'
+          + '<button class="btn btn-primary" disabled="disabled">Check-in</button>'
+          + '<span class="help-inline"></span>'
         + '</form>'
       + '</div>',
       settable_map: {
@@ -42,12 +41,12 @@ spa.checkin = (function() {
       $checkIn: $container.find('.check-in'),
       $client: $container.find('#id'),
       $formClient: $container.find('.form-inline'),
-      $formCheckIn: $container.find('.form-button'),
+      $formCheckIn: $container.find('.form-checkin'),
       $date: $container.find('#date'),
       $helpBlock: $container.find('.help-block'),
       $checkInBtn: $container.find('.btn-primary'),
-      $controlGroupClient: $container.find('.form-inline .control-group'),
-      $helpInline: $container.find('.form-button .help-inline')
+      $formGroup: $container.find('.form-inline .form-group'),
+      $helpInline: $container.find('.form-checkin .help-inline')
     }
   };
 
@@ -57,7 +56,7 @@ spa.checkin = (function() {
       error = client_map.error;
       if (error) {
         jqueryMap.$helpBlock.html(error).addClass('text-error');
-        jqueryMap.$controlGroupClient.addClass('error');
+        jqueryMap.$formGroup.addClass('has-error');
       } else {
         jqueryMap.$helpBlock.html(client_map.nome);
         jqueryMap.$date.removeAttr('disabled');
@@ -72,7 +71,7 @@ spa.checkin = (function() {
     jqueryMap.$date.val('');
     jqueryMap.$checkInBtn.attr('disabled','disabled');
     jqueryMap.$date.attr('disabled','disabled');
-    jqueryMap.$controlGroupClient.removeClass('error');
+    jqueryMap.$formGroup.removeClass('has-error');
     if (id.trim() === '') {
       return false;
     }

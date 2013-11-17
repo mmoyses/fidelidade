@@ -39,10 +39,6 @@ code {
   font-size: 80%;
 }
 
-.form-button {
-  margin-top: 20px;
-}
-
 .help-block {
   margin-top: 10px;
 }
@@ -57,4 +53,16 @@ code {
 
 .help-inline.text-success {
   color: #468847;
+}
+
+.form-group {
+  margin-right: 2px;
+}
+
+.hasDatepicker {
+  width: 200px;
+}
+
+#wrap .help-inline {
+  margin-left: 10px;
 }

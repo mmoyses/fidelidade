@@ -1,6 +1,6 @@
 spa.fake = (function() {
   'use strict';
-  var getClientList, getClient, _clients, _hospedagens, getHospedagemList, _empresas, _users, checkIn, checkOut, getUser, mockSio;
+  var getClientList, getClient, _clients, _hospedagens, getHospedagemList, _empresas, _users, pad, checkIn, checkOut, getUser, mockSio;
 
   _clients = [
     { id: "9982442", nome: "GUILHERME RIBEIRO ESPINOSA COSTA", documento: "111.466.247-00", endereco: "RUA SIDNEY VASCONCELOS AGUIAR, Nº 1047 APTO 505A", bairro: "GLÓRIA", cidade: "MACAÉ", estado: "RJ", cep: "27937-010", celular: "(22) 9946-7508", email: "guilherme.espinosa@yahoo.com.br", data_cadastro: new Date("2013-08-20 04:47:33"), hashed_password: "3CD377C7F7AA56D49F67CFEC515921C5", pontos: 0 },
@@ -33,7 +33,7 @@ spa.fake = (function() {
   ];
 
   _users = [
-    { id: 1, nome: 'Marcus Moyses', email: 'marcus.moyses@gmail.com', hashed_password: '28C6FC532627733F572B6EA4A5710A47', empresa: 1 }
+    { id: 1, nome: 'Marcus Moyses', email: 'marcus.moyses@gmail.com', username: "mmoyses", hashed_password: '28C6FC532627733F572B6EA4A5710A47', empresa: 1 }
   ];
 
   getClientList = function() {
@@ -54,9 +54,15 @@ spa.fake = (function() {
     return _hospedagens;
   };
 
+  pad = function(number) {
+    if (number.toString().length === 1)
+      return '0' + number;
+    return number;
+  };
+
   checkIn = function(id, date) {
     var client = getClient(id),
-        d = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
+        d = pad(date.getDate()) + '/' + pad(date.getMonth() + 1) + '/' + date.getFullYear(),
         length = _hospedagens.length,
         lastId = _hospedagens[length - 1].id;
     _hospedagens.push({ id: lastId + 1, client: client.nome, date: d });

@@ -4,14 +4,16 @@ module.exports = function(app, passport) {
     auth = require('./middlewares/authorization'),
     index = require('../app/controllers/index');
 
+  app.get('/login', auth.userLogin);
+
   app.get('/*?', auth.requiresLogin);
 
   app.get('/sair', usuarios.signout);
 
-  app.post('/entrar', passport.authenticate('local', {
-    failureRedirect: '/',
+  app.post('/login', passport.authenticate('local', {
+    failureRedirect: '/login',
     successRedirect: '/',
-    failureFlash: 'Email ou senha inválida'
+    failureFlash: 'Usuário ou senha inválida!'
   }));
 
   //Home route

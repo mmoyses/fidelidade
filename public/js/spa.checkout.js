@@ -3,19 +3,17 @@ spa.checkout = (function() {
   var configMap = {
       main_html: String()
       + '<div class="check-out">'
-        + '<form class="form-button form-horizontal">'
+        + '<form class="form-checkout">'
           + '<fieldset>'
             + '<legend>Check-out</legend>'
-            + '<div class="control-group hospedagem">'
+            + '<div class="form-group hospedagem">'
             + '</div>'
-            + '<div class="control-group">'
-              + '<label>Data:</label>'
-              + '<input type="text" id="date" name="date" disabled="disabled"/>'
+            + '<div class="form-group">'
+              + '<label for="date">Data</label>'
+              + '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>'
             + '</div>'
-            + '<div class="control-group">'
-              + '<button class="btn btn-primary" disabled="disabled">Check-out</button>'
-              + '<span class="help-inline"></span>'
-            + '</div>'
+            + '<button class="btn btn-primary" disabled="disabled">Check-out</button>'
+            + '<span class="help-inline"></span>'
           + '</fieldset>'
         + '</form>'
       + '</div>',
@@ -38,9 +36,9 @@ spa.checkout = (function() {
       $container: $container,
       $checkOut: $container.find('.check-out'),
       $date: $container.find('#date'),
-      $formCheckOut: $container.find('.form-button.form-horizontal'),
+      $formCheckOut: $container.find('.form-checkout'),
       $checkOutBtn: $container.find('.btn-primary'),
-      $helpInline: $container.find('.form-button .help-inline'),
+      $helpInline: $container.find('.form-checkout .help-inline'),
       $hospedagem: $container.find('.hospedagem')
     }
   };

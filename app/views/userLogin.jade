@@ -1,0 +1,26 @@
+extends layouts/default
+
+block init
+  link(rel='stylesheet', href='/css/login.css')
+
+block main
+  nav.navbar.navbar-fixed-top.navbar-inverse
+    div.navbar-header
+      a.navbar-brand(href='/') Programa de Recompensas
+  div.container
+    div.content
+      div.login-form
+        h2 Login
+        form(action='/login', method='post')
+          fieldset
+            div.clearfix
+              input.form-control(type='text', name='username', placeholder='Usuário')
+            div.clearfix
+              input.form-control(type='password', name='senha', placeholder='Senha')
+            button.btn.btn-primary(type='submit') Entrar
+            a.forgot(href='/esqueci') Esqueceu a senha?
+  if error
+    div.message
+      div.alert.alert-danger.alert-dismissable
+        button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
+        = error          
