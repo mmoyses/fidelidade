@@ -24,6 +24,7 @@ spa.user = (function() {
 
   onGetUser = function(event, user_map) {
     stateMap.user = $.extend(true, {}, user_map);
+    spa.util.setUser(stateMap.user);
     setMenu();
     jqueryMap.$user.html(stateMap.user.nome + '<b class="caret"/>');
   };

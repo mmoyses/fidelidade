@@ -143,7 +143,7 @@ spa.checkout = (function() {
 
     $.gevent.subscribe(jqueryMap.$formCheckOut, 'spa-getactivelist', onGetActiveList);
     $.gevent.subscribe(jqueryMap.$hospedagem, 'spa-checkout', onCheckOut);
-    configMap.hospedagem_model.getActiveList('x'); //FIXME
+    configMap.hospedagem_model.getActiveList(spa.util.getEmpresa());
   };
 
   removeComponent = function() {

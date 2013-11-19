@@ -22,10 +22,10 @@ spa.fake = (function() {
   ];
 
   _hospedagens = [
-    { id: 1, client: 'RUBEM RECH', data_checkin: new Date('10/01/2013 12:00:00') },
-    { id: 2, client: 'CRISTIANE ESMERALDO OLIVEIRA E SILVA', data_checkin: new Date('11/01/2013 12:00:00') },
-    { id: 3, client: 'SERGIO LUIZ DO AMARAL LOZOVEY', data_checkin: new Date('11/12/2013 12:00:00') },
-    { id: 4, client: 'MARCOS HUBER MENDES', data_checkin: new Date('11/15/2013 12:00:00') }
+    { id: 1, client: 'RUBEM RECH', data_checkin: new Date('10/01/2013 12:00:00'), empresa: 1 },
+    { id: 2, client: 'CRISTIANE ESMERALDO OLIVEIRA E SILVA', data_checkin: new Date('11/01/2013 12:00:00'), empresa: 1 },
+    { id: 3, client: 'SERGIO LUIZ DO AMARAL LOZOVEY', data_checkin: new Date('11/12/2013 12:00:00'), empresa: 1 },
+    { id: 4, client: 'MARCOS HUBER MENDES', data_checkin: new Date('11/15/2013 12:00:00'), empresa: 2 }
   ];
 
   _empresas = [
@@ -54,7 +54,7 @@ spa.fake = (function() {
     var i,
         list = [];
     for (i = 0; i < _hospedagens.length; i++) {
-      if (!_hospedagens[i].data_checkout)
+      if (!_hospedagens[i].data_checkout && hotel_id === _hospedagens[i].empresa)
         list.push(_hospedagens[i]);
     }
     return list;
@@ -67,20 +67,38 @@ spa.fake = (function() {
   };
 
   checkIn = function(id, date) {
-    var client = getClient(id);
+    var client = getClient(id),
         length = _hospedagens.length,
-        lastId = _hospedagens[length - 1].id;
-    _hospedagens.push({ id: lastId + 1, client: client.nome, data_checkin: date });
-  };
-
-  checkOut = function(id, date) {
-    var i, index;
-    for (i = 0; i < _hospedagens.length; i++) {
-      if (_hospedagens[i].id === id) {
-        _hospedagens[i].data_checkout = date;
+        lastId = _hospedagens[length - 1].id,
+        empresa = spa.util.getEmpresa(),
+        hospedagens = getHospedagemList(empresa),
+        i, found;
+    for (i = 0; i < hospedagens.length; i++) {
+      if (hospedagens[i].client === client.nome) {
+        found = true;
         break;
       }
     }
+    if (found)
+      return false;
+    _hospedagens.push({ id: lastId + 1, client: client.nome, data_checkin: date, empresa: empresa });
+    return true;
+  };
+
+  checkOut = function(id, date) {
+    var i, index,
+        failed = false,
+        hospedagens = getHospedagemList(spa.util.getEmpresa());
+    for (i = 0; i < hospedagens.length; i++) {
+      if (hospedagens[i].id === id) {
+        if (hospedagens[i].data_checkin > date)
+          failed = true;
+        else
+          hospedagens[i].data_checkout = date;
+        break;
+      }
+    }
+    return !failed;
   };
 
   getUser = function() {
@@ -116,8 +134,10 @@ spa.fake = (function() {
               date = data.date,
               checkin_map = {};
           if (id && date) {
-            checkIn(id, date);
-            checkin_map.msg = 'Check-in realizado com sucesso';
+            if (checkIn(id, date))
+              checkin_map.msg = 'Check-in realizado com sucesso';
+            else
+              checkin_map.error = 'Cliente ' + id + ' já está hospedado no hotel';
           } else {
             checkin_map.error = 'Não foi possível fazer check-in do cliente ' + id;
           }
@@ -130,7 +150,7 @@ spa.fake = (function() {
           var id = data.hotel,
               hospedagem_map = {};
           if (id) {
-            hospedagem_map.hospedagens = getHospedagemList();
+            hospedagem_map.hospedagens = getHospedagemList(id);
           } else {
             hospedagem_map.error = 'Não há hospedagens em aberto';
           }
@@ -144,9 +164,11 @@ spa.fake = (function() {
               date = data.date,
               checkout_map = {};
           if (id && date) {
-            checkOut(id, date);
-            checkout_map.msg = 'Check-out realizado com sucesso';
-            checkout_map.id = id;
+            if (checkOut(id, date)) {
+              checkout_map.msg = 'Check-out realizado com sucesso';
+              checkout_map.id = id;
+            } else
+              checkout_map.error = 'Data de check-out não pode ser anterior ao check-in';
           } else {
             checkout_map.error = 'Não foi possível fazer check-out';
           }
