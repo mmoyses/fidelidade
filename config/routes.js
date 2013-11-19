@@ -5,6 +5,7 @@ module.exports = function(app, passport) {
     index = require('../app/controllers/index');
 
   app.get('/login', auth.userLogin);
+  app.get('/erro', auth.clientLogin);
 
   app.get('/*?', auth.requiresLogin);
 
@@ -14,6 +15,12 @@ module.exports = function(app, passport) {
     failureRedirect: '/login',
     successRedirect: '/',
     failureFlash: 'Usuário ou senha inválida!'
+  }));
+
+  app.post('/entrar', passport.authenticate('local-client', {
+    failureRedirect: '/erro',
+    successRedirect: '/',
+    failureFlash: 'Email ou senha inválida!'
   }));
 
   //Home route

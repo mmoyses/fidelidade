@@ -66,3 +66,7 @@ code {
 #wrap .help-inline {
   margin-left: 10px;
 }
+
+.main h1 {
+  text-align: center;
+}

@@ -22,3 +22,13 @@ exports.userLogin = function(req, res, next) {
     res.render('userLogin', { error: error });
   }
 };
+
+exports.clientLogin = function(req, res, next) {
+  var error;
+  if (req.isAuthenticated()) {
+    res.render('index');
+  } else {
+    error = req.flash('error')[0];
+    res.render('clientLogin', { error: error });
+  }
+};

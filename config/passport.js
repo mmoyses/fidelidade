@@ -1,22 +1,37 @@
 var mongoose = require('mongoose'),
   LocalStrategy = require('passport-local').Strategy,
-  Usuario = mongoose.model('Usuario');
+  Usuario = mongoose.model('Usuario'),
+  Cliente = mongoose.model('Cliente');
 
 module.exports = function(passport) {
   //Serialize sessions
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    if (user.username)
+      done(null, user.username)
+    else
+      done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
+  passport.deserializeUser(function(username, done) {
     Usuario.findOne({
-      _id: id
+      username: username
     }, { _id: 1, nome: 1, email: 1, username: 1, empresa: 1 }, function(err, user) {
-      done(err, user);
+      if (!err && !user)
+        done('pass');
+      else
+        done(err, user);
     });
   });
 
-  //Use local strategy
+  passport.deserializeUser(function(id, done) {
+    Cliente.findOne({
+      _id: id
+    }, { _id: 1, nome: 1, email: 1, pontos: 1, hospedagens: 1, resgates: 1 }, function(err, client) {
+      done(err, client);
+    });
+  });
+
+  //usuario login
   passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'senha'
@@ -39,6 +54,32 @@ module.exports = function(passport) {
         });
       }
       return done(null, user);
+    });
+  }));
+
+  //cliente login
+  passport.use('local-client', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'senha'
+  },
+  function(email, password, done) {
+    Cliente.findOne({
+      email: email
+    }, function(err, client) {
+      if (err) {
+        return done(err);
+      }
+      if (!client) {
+        return done(null, false, {
+          message: 'Email ou senha inválida!'
+        });
+      }
+      if (!client.authenticate(password)) {
+        return done(null, false, {
+          message: 'Email ou senha inválida!'
+        });
+      }
+      return done(null, client);
     });
   }));
 };

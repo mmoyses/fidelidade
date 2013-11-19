@@ -5,24 +5,67 @@ block init
 
 block main
   nav.navbar.navbar-fixed-top.navbar-inverse
-    div.navbar-inner
-      div.container-fluid
-        a.navbar-brand(href='/') Programa de Recompensas
-        form.navbar-form.navbar-right(action='/entrar', method='post')
-          div.form-group
-            input.form-control(type='text', name='email', placeholder='Email')
-          div.form-group
-            input.form-control(type='password', name='senha', placeholder='Senha')
-          button.btn.btn-success(type='submit') Entrar
-  div.main.container
+    div.navbar-header
+      a.navbar-brand(href='/') Programa de Recompensas
+    form.navbar-form.navbar-right(action='/entrar', method='post')
+      div.form-group
+        input.form-control(type='text', name='email', placeholder='Email')
+      div.form-group
+        input.form-control(type='password', name='senha', placeholder='Senha')
+      button.btn.btn-success(type='submit') Entrar
+  div.container
     div.content
-      div.row
-        div.login-form
-          h2 Crie uma conta
-          form(action='/usuarios')
-            fieldset
-              div.clearfix
-                input(type='text', placeholder='Email')
-              div.clearfix
-                input(type='password', placeholder='Senha')
-              button.btn.btn-primary(type='submit') Criar
+      div.login-form
+        h2 Crie uma conta
+        form.form-horizontal(action='/novo', method='post')
+          fieldset
+            div.clearfix
+              label.col-sm-3.control-label(for='nome') Nome
+              div.col-sm-7
+                input.form-control.required(type='text', name='nome', placeholder='Nome completo')
+            div.clearfix
+              label.col-sm-3.control-label(for='email') Email
+              div.col-sm-7
+                input.form-control.required(type='text', name='email', placeholder='Email')
+            div.clearfix
+              label.col-sm-3.control-label(for='documento') Documento
+              div.col-sm-7
+                input.form-control.required(type='text', name='documento', placeholder='CPF ou passaporte')
+            div.clearfix
+              label.col-sm-3.control-label(for='endereco') Endereço
+              div.col-sm-7
+                input.form-control(type='text', name='endereco', placeholder='Logradouro, nº, complemento')
+            div.clearfix
+              label.col-sm-3.control-label(for='cidade') Cidade
+              div.col-sm-7
+                input.form-control(type='text', name='cidade', placeholder='Cidade')
+            div.clearfix
+              label.col-sm-3.control-label(for='estado') Estado
+              div.col-sm-7
+                input.form-control(type='text', name='estado', placeholder='Estado')
+            div.clearfix
+              label.col-sm-3.control-label(for='cep') CEP
+              div.col-sm-7
+                input.form-control(type='text', name='cep', placeholder='CEP')
+            div.clearfix
+              label.col-sm-3.control-label(for='telefone') Telefone
+              div.col-sm-7
+                input.form-control(type='text', name='telefone', placeholder='(DDD) Número')
+            div.clearfix
+              label.col-sm-3.control-label(for='celular') Celular
+              div.col-sm-7
+                input.form-control(type='text', name='celular', placeholder='(DDD) Número')
+            div.clearfix
+              label.col-sm-3.control-label(for='empresa') Empresa
+              div.col-sm-7
+                input.form-control(type='text', name='empresa', placeholder='Empresa')
+            div.clearfix
+              label.col-sm-3.control-label(for='senha') Senha
+              div.col-sm-7
+                input.form-control.required(type='password', name='senha', placeholder='Senha')
+            div.clearfix
+              label.col-sm-3.control-label(for='confirm') Confirmação
+              div.col-sm-7
+                input.form-control.required(type='text', name='confirm', placeholder='Confirme a senha')
+            div.col-sm-offset-3.col-sm-7
+              button.btn.btn-primary.btn-block(type='submit') Criar

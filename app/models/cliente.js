@@ -40,7 +40,7 @@ ClienteSchema.virtual('senha').set(function(senha) {
 
 ClienteSchema.methods = {
   authenticate: function(plainText) {
-    return security.encryptPassword(plainText) === this.hashed_password;
+    return security.encrypt(plainText) === this.hashed_password;
   },
   encryptPassword: function(senha) {
     if (!senha)
@@ -51,5 +51,8 @@ ClienteSchema.methods = {
     return security.decrypt(this.hashed_password);
   }
 };
+
+ClienteSchema.index({ email: 1 });
+ClienteSchema.set('autoIndex', true);
 
 mongoose.model('Cliente', ClienteSchema, 'cliente');

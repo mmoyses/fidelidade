@@ -42,6 +42,10 @@ spa.user = (function() {
           title: 'Check-out'
         },
         {
+          link: 'consultar',
+          title: 'Consultar'
+        },
+        {
           link: 'usuarios',
           title: 'Usuários'
         },

@@ -10,7 +10,7 @@
 
 .container .content {
   width: auto;
-  max-width: 835px;
+  max-width: 640px;
   background-color: #fff;
   -webkit-box-shadow: 0 0 225px rgba(255, 255, 255, .55);
   box-shadow: 0 0 225px rgba(255, 255, 255, .55);
@@ -49,12 +49,7 @@ h2 {
   line-height: 1;
 }
 
-.forgot {
-  margin-left: 25px;
-}
-
-.form-control {
-  width: 220px;
+.container .form-control {
   margin-bottom: 5px;
 }
 

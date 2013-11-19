@@ -46,4 +46,7 @@ UsuarioSchema.methods = {
   }
 };
 
+UsuarioSchema.index({ username: 1 });
+UsuarioSchema.set('autoIndex', true);
+
 mongoose.model('Usuario', UsuarioSchema, 'usuario');
