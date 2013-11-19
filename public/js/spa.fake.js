@@ -22,10 +22,10 @@ spa.fake = (function() {
   ];
 
   _hospedagens = [
-    { id: 1, client: 'RUBEM RECH', date: '01/10/2013' },
-    { id: 2, client: 'CRISTIANE ESMERALDO OLIVEIRA E SILVA', date: '01/11/2013' },
-    { id: 3, client: 'SERGIO LUIZ DO AMARAL LOZOVEY', date: '12/11/2013' },
-    { id: 4, client: 'MARCOS HUBER MENDES', date: '15/11/2013' }
+    { id: 1, client: 'RUBEM RECH', data_checkin: new Date('10/01/2013 12:00:00') },
+    { id: 2, client: 'CRISTIANE ESMERALDO OLIVEIRA E SILVA', data_checkin: new Date('11/01/2013 12:00:00') },
+    { id: 3, client: 'SERGIO LUIZ DO AMARAL LOZOVEY', data_checkin: new Date('11/12/2013 12:00:00') },
+    { id: 4, client: 'MARCOS HUBER MENDES', data_checkin: new Date('11/15/2013 12:00:00') }
   ];
 
   _empresas = [
@@ -51,7 +51,13 @@ spa.fake = (function() {
   };
 
   getHospedagemList = function(hotel_id) {
-    return _hospedagens;
+    var i,
+        list = [];
+    for (i = 0; i < _hospedagens.length; i++) {
+      if (!_hospedagens[i].data_checkout)
+        list.push(_hospedagens[i]);
+    }
+    return list;
   };
 
   pad = function(number) {
@@ -61,22 +67,20 @@ spa.fake = (function() {
   };
 
   checkIn = function(id, date) {
-    var client = getClient(id),
-        d = pad(date.getDate()) + '/' + pad(date.getMonth() + 1) + '/' + date.getFullYear(),
+    var client = getClient(id);
         length = _hospedagens.length,
         lastId = _hospedagens[length - 1].id;
-    _hospedagens.push({ id: lastId + 1, client: client.nome, date: d });
+    _hospedagens.push({ id: lastId + 1, client: client.nome, data_checkin: date });
   };
 
   checkOut = function(id, date) {
     var i, index;
     for (i = 0; i < _hospedagens.length; i++) {
       if (_hospedagens[i].id === id) {
-        index = i;
+        _hospedagens[i].data_checkout = date;
         break;
       }
     }
-    _hospedagens.splice(index, 1);
   };
 
   getUser = function() {

@@ -28,7 +28,7 @@ spa.checkout = (function() {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, onSubmitCheckout, onDateChange, onGetActiveList, onCheckOut, configModule, initModule, removeComponent;
+    setJqueryMap, onSubmitCheckout, onDateChange, onGetActiveList, getDate, onCheckOut, configModule, initModule, removeComponent;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -98,6 +98,19 @@ spa.checkout = (function() {
     return true;
   };
 
+  getDate = function(date) {
+    var day, month, year;
+    day = date.getDate().toString();
+    if (day.length === 1)
+      day = '0' + day;
+    month = (date.getMonth() + 1).toString();
+    if (month.length === 1)
+      month = '0' + month;
+    year = date.getFullYear().toString();
+
+    return day + '/' + month + '/' + year;
+  }
+
   onGetActiveList = function(event, hospedagem_map) {
     var i, id, client, date, error, hospedagens;
     if (hospedagem_map) {
@@ -109,8 +122,8 @@ spa.checkout = (function() {
         for (i = 0; i < hospedagens.length; i++) {
           id = hospedagens[i].id;
           client = hospedagens[i].client;
-          date = hospedagens[i].date;
-          jqueryMap.$hospedagem.append('<label class="radio"><input type="radio" name="hospedagem" value="' + id + '"/>' + client + ' (' + date + ')</label>');
+          date = hospedagens[i].data_checkin;
+          jqueryMap.$hospedagem.append('<label class="radio"><input type="radio" name="hospedagem" value="' + id + '"/>' + client + ' (' + getDate(date) + ')</label>');
         }
         $('input:radio').bind('change', function() {
           jqueryMap.$date.removeAttr('disabled');
