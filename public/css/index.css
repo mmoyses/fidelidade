@@ -1,0 +1,9 @@
+@media (max-width: 767px) {
+  #wrap > .container {
+    padding-top: 220px;
+  }
+
+  #footer {
+    margin-top: 80px;
+  }
+}
