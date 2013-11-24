@@ -1,6 +1,6 @@
 spa.util = (function () {
   'use strict';
-  var makeError, setConfigMap, setUser, getEmpresa,
+  var makeError, setConfigMap, setUser, getEmpresa, getDate,
       stateMap = {
         user: null
       };
@@ -45,10 +45,24 @@ spa.util = (function () {
     return null;
   };
 
+  getDate = function(date) {
+    var day, month, year;
+    day = date.getDate().toString();
+    if (day.length === 1)
+      day = '0' + day;
+    month = (date.getMonth() + 1).toString();
+    if (month.length === 1)
+      month = '0' + month;
+    year = date.getFullYear().toString();
+
+    return day + '/' + month + '/' + year;
+  }
+
   return {
     makeError: makeError,
     setConfigMap: setConfigMap,
     setUser: setUser,
-    getEmpresa: getEmpresa
+    getEmpresa: getEmpresa,
+    getDate: getDate
   };
 }());

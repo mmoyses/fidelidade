@@ -146,6 +146,9 @@ spa.shell = (function() {
       user_model: spa.model.user
     });
     spa.user.initModule($container);
+    spa.consultar.configModule({
+      client_model: spa.model.client
+    });
 
     $(window).bind('hashchange', onHashchange).trigger('hashchange');
 

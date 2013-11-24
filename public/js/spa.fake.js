@@ -22,10 +22,10 @@ spa.fake = (function() {
   ];
 
   _hospedagens = [
-    { id: 1, client: 'RUBEM RECH', data_checkin: new Date('10/01/2013 12:00:00'), empresa: 1 },
-    { id: 2, client: 'CRISTIANE ESMERALDO OLIVEIRA E SILVA', data_checkin: new Date('11/01/2013 12:00:00'), empresa: 1 },
-    { id: 3, client: 'SERGIO LUIZ DO AMARAL LOZOVEY', data_checkin: new Date('11/12/2013 12:00:00'), empresa: 1 },
-    { id: 4, client: 'MARCOS HUBER MENDES', data_checkin: new Date('11/15/2013 12:00:00'), empresa: 2 }
+    { id: 1, client: 'RUBEM RECH', data_checkin: new Date('10/01/2013 12:00:00'), data_checkout: new Date('11/01/2013 12:00:00'), empresa: 1, pontos: 2 },
+    { id: 2, client: 'CRISTIANE ESMERALDO OLIVEIRA E SILVA', data_checkin: new Date('11/01/2013 12:00:00'), empresa: 1, pontos: null },
+    { id: 3, client: 'SERGIO LUIZ DO AMARAL LOZOVEY', data_checkin: new Date('11/12/2013 12:00:00'), empresa: 1, pontos: null },
+    { id: 4, client: 'MARCOS HUBER MENDES', data_checkin: new Date('11/15/2013 12:00:00'), empresa: 2, pontos: null }
   ];
 
   _empresas = [
@@ -50,12 +50,20 @@ spa.fake = (function() {
     return null;
   };
 
-  getHospedagemList = function(hotel_id) {
-    var i,
+  getHospedagemList = function(hotel_id, client_id) {
+    var i, client,
         list = [];
-    for (i = 0; i < _hospedagens.length; i++) {
-      if (!_hospedagens[i].data_checkout && hotel_id === _hospedagens[i].empresa)
-        list.push(_hospedagens[i]);
+    if (!client_id) {
+      for (i = 0; i < _hospedagens.length; i++) {
+        if (!_hospedagens[i].data_checkout && hotel_id === _hospedagens[i].empresa)
+          list.push(_hospedagens[i]);
+      }
+    } else {
+      client = getClient(client_id);
+      for (i = 0; i < _hospedagens.length; i++) {
+        if (hotel_id === _hospedagens[i].empresa && _hospedagens[i].client === client.nome)
+          list.push(_hospedagens[i]);
+      }
     }
     return list;
   };
@@ -148,9 +156,15 @@ spa.fake = (function() {
       if (msg_type === 'getactivelist' && callback_map.getactivelist) {
         setTimeout(function() {
           var id = data.hotel,
-              hospedagem_map = {};
+              hospedagem_map = {},
+              list;
           if (id) {
-            hospedagem_map.hospedagens = getHospedagemList(id);
+            list = getHospedagemList(id);
+            if (list.length > 0) {
+              hospedagem_map.hospedagens = list;
+            } else {
+              hospedagem_map.error = 'Não há hospedagens em aberto';  
+            }
           } else {
             hospedagem_map.error = 'Não há hospedagens em aberto';
           }
@@ -180,6 +194,26 @@ spa.fake = (function() {
         setTimeout(function() {
           var user_map = getUser();
           callback_map.getuser(user_map);
+        }, 1000);
+      }
+
+      if (msg_type === 'gethospedagens' && callback_map.gethospedagens) {
+        setTimeout(function() {
+          var client_id = data.client,
+              hotel_id = data.hotel,
+              hospedagens_map = {},
+              list;
+          if (client_id && hotel_id) {
+            list = getHospedagemList(hotel_id, client_id);
+            if (list.length > 0) {
+              hospedagens_map.hospedagens = list;
+            } else {
+              hospedagens_map.error = 'Não há hospedagens para esse cliente';  
+            }
+          } else {
+            hospedagens_map.error = 'Não há hospedagens para esse cliente';
+          }
+          callback_map.gethospedagens(hospedagens_map);
         }, 1000);
       }
     };

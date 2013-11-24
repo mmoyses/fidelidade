@@ -6,7 +6,7 @@ spa.model = (function() {
       client, hospedagem, user, initModule;
 
   client = (function() {
-    var getList, getClient, checkIn, init, _publish_getclient, _publish_checkin;
+    var getList, getClient, checkIn, init, getHospedagens, _publish_gethospedagens, _publish_getclient, _publish_checkin;
 
     _publish_getclient = function(client_map) {
       $.gevent.publish('spa-getclient', [client_map]);
@@ -16,11 +16,14 @@ spa.model = (function() {
       $.gevent.publish('spa-checkin', [checkin_map]);
     };
 
+    _publish_gethospedagens = function(hospedagens_map) {
+      $.gevent.publish('spa-gethospedagens', [hospedagens_map]);
+    };
+
     getList = function() {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;
-      
     };
 
     getClient = function(id) {
@@ -38,18 +41,27 @@ spa.model = (function() {
       sio.emit('checkin', { id: id, date: date });
     };
 
+    getHospedagens = function(hotel_id, client_id) {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.emit('gethospedagens', { client: client_id, hotel: hotel_id });
+    };
+
     init = function() {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;
       sio.on('getclient', _publish_getclient);
       sio.on('checkin', _publish_checkin);
+      sio.on('gethospedagens', _publish_gethospedagens);
     };
 
     return {
       getList: getList,
       getClient: getClient,
       checkIn: checkIn,
+      getHospedagens: getHospedagens,
       init: init
     }
   }());
