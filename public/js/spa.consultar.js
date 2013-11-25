@@ -1,20 +1,20 @@
 spa.consultar = (function() {
 	'use strict';
   var configMap = {
-      main_html: String()
-      + '<div class="consulta">'
-        + '<form class="form-inline">'
-          + '<fieldset>'
-            + '<legend>Consulta</legend>'
-            + '<div class="form-group">'
-              + '<label class="sr-only" for="id">Id do cliente</label>'
-              + '<input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">'
-            + '</div>'
-            + '<button type="submit" class="btn btn-default">Procurar</button>'
-            + '<span class="help-block">&nbsp;</span>'
-          + '</fieldset>'
-        + '</form>'
-      + '</div>',
+      main_html: String() +
+        '<div class="consulta">' +
+          '<form class="form-inline">' +
+            '<fieldset>' +
+              '<legend>Consulta</legend>' +
+              '<div class="form-group">' +
+                '<label class="sr-only" for="id">Id do cliente</label>' +
+                '<input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">' +
+              '</div>' +
+              '<button type="submit" class="btn btn-default">Procurar</button>' +
+              '<span class="help-block">&nbsp;</span>' +
+            '</fieldset>' +
+          '</form>' +
+        '</div>',
       settable_map: {
         client_model: true
       },
@@ -36,7 +36,7 @@ spa.consultar = (function() {
       $helpBlock: $container.find('.help-block'),
       $formGroup: $container.find('.form-inline .form-group'),
       $table: null
-    }
+    };
   };
 
   onGetClient = function(event, client_map) {
@@ -52,7 +52,7 @@ spa.consultar = (function() {
         configMap.client_model.getHospedagens(spa.util.getEmpresa(), client_id);
       }
     }
-  }
+  };
 
   onSubmitClient = function() {
     var client,
@@ -114,7 +114,7 @@ spa.consultar = (function() {
       jqueryMap = {};
     }
     stateMap.$container = null;
-  }
+  };
 
   return {
     initModule: initModule,

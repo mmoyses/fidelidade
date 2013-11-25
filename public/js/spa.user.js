@@ -19,7 +19,7 @@ spa.user = (function() {
       $container: $container,
       $menu: $container.find('#menu'),
       $user: $container.find('.dropdown-toggle')
-    }
+    };
   };
 
   onGetUser = function(event, user_map) {

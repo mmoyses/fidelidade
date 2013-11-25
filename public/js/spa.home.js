@@ -1,10 +1,10 @@
 spa.home = (function() {
   'use strict';
   var configMap = {
-    main_html: String()
-      + '<div class="main">'
-        + '<h1>Bem vindo ao Programa de Recompensas</h1>'
-      + '</div>'
+    main_html: String() + 
+      '<div class="main">' +
+        '<h1>Bem vindo ao Programa de Recompensas</h1>' +
+      '</div>'
     },
     stateMap = {
       $container: null
@@ -17,7 +17,7 @@ spa.home = (function() {
     jqueryMap = {
       $container: $container,
       $main: $container.find('.main')
-    }
+    };
   };
 
   initModule = function($container) {
@@ -32,7 +32,7 @@ spa.home = (function() {
       jqueryMap = {};
     }
     stateMap.$container = null;
-  }
+  };
 
   return {
     initModule: initModule,

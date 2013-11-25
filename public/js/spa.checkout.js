@@ -1,22 +1,22 @@
 spa.checkout = (function() {
   'use strict';
   var configMap = {
-      main_html: String()
-      + '<div class="check-out">'
-        + '<form class="form-checkout">'
-          + '<fieldset>'
-            + '<legend>Check-out</legend>'
-            + '<div class="form-group hospedagem">'
-            + '</div>'
-            + '<div class="form-group">'
-              + '<label for="date">Data</label>'
-              + '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>'
-            + '</div>'
-            + '<button class="btn btn-primary" disabled="disabled">Check-out</button>'
-            + '<span class="help-inline"></span>'
-          + '</fieldset>'
-        + '</form>'
-      + '</div>',
+      main_html: String() +
+        '<div class="check-out">' +
+          '<form class="form-checkout">' +
+            '<fieldset>' +
+              '<legend>Check-out</legend>' +
+              '<div class="form-group hospedagem">' +
+              '</div>' +
+              '<div class="form-group">' +
+                '<label for="date">Data</label>' +
+                '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>' +
+              '</div>' +
+              '<button class="btn btn-primary" disabled="disabled">Check-out</button>' +
+              '<span class="help-inline"></span>' +
+            '</fieldset>' +
+          '</form>' +
+        '</div>',
       settable_map: {
         client_model: true,
         hospedagem_model: true
@@ -40,7 +40,7 @@ spa.checkout = (function() {
       $checkOutBtn: $container.find('.btn-primary'),
       $helpInline: $container.find('.form-checkout .help-inline'),
       $hospedagem: $container.find('.hospedagem')
-    }
+    };
   };
 
   onSubmitCheckout = function() {
@@ -139,7 +139,7 @@ spa.checkout = (function() {
       jqueryMap = {};
     }
     stateMap.$container = null;
-  }
+  };
 
   return {
     initModule: initModule,

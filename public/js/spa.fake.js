@@ -11,7 +11,7 @@ spa.fake = (function() {
     { id: "9982447", nome: "MARCELO ANES CARVALHO", documento: "368.954.901-91", endereco: "QI 33 BLOCO 5 APTO 603", bairro: "GUARÁ II", cidade: "BRASÍLIA", estado: "DF", cep: "71065330", telefone: "+55 61 30369608", celular: "+55 61 96469606", email: "marcelo.carvalho.ma@hitachi.com", empresa: "HITACHI BRASIL LTDA", data_cadastro: new Date("2013-09-05 09:56:17"), hashed_password: "A8706EB6C49DFBCD307CE50258029B8A", pontos: 0 },
     { id: "9982448", nome: "MARCELO FABIANO FRAGA DE OLIVEIRA", documento: "174.057.128-27", endereco: "RUA EUCLIDES DA CUNHA 533", bairro: "LORENZETTI", cidade: "MARILIA", estado: "SP", cep: "17506180", celular: "(14) 99704-1709", email: "mf_foliveira@hotmail.com", empresa: "ASSOCIAÇÃO DOS SERVIDORES PUBLICOS MUNICIPAIS DE MARILIA", data_cadastro: new Date("2013-09-05 12:58:38"), hashed_password: "FA4DA36C5585EDF44A1CE3254C54D640", pontos: 0 },
     { id: "9982449", nome: "MARINA DE FARIA CASTRO APPROBATO", documento: "368.288.818-77", endereco: "RUA CUIABÁ 717", bairro: "CENTRO", cidade: "GLÓRIA DE DOURADOS", estado: "MS", cep: "79730-000", celular: "16 98112-4888", email: "maapprobato@yahoo.com.br", empresa: "M.A. ACESSÓRIOS", data_cadastro: new Date("2013-09-18 07:03:54"), hashed_password: "B1CC4680D30ECC259BA974C6B7C3C258", pontos: 0 },
-    { id: "9982450", nome: "SANDRO APARECIDO GARBIN", documento: "056.869.748-02", endereco: "SQN 214 - BLOCO E - APTO 414", bairro: "ASA NORTE", cidade: "BRASÍ­LIA", estado: "DF", cep: "70873050", celular: "6181185885", email: "sandro.garbin@caixa.gov.br", empresa: "CAIXA ECONÔMICA FEDERAL", data_cadastro: new Date("2013-09-23 05:57:40"), hashed_password: "04D271F5E3B498DE06B6C82BE685868C", pontos: 0 },
+    { id: "9982450", nome: "SANDRO APARECIDO GARBIN", documento: "056.869.748-02", endereco: "SQN 214 - BLOCO E - APTO 414", bairro: "ASA NORTE", cidade: "BRASÍLIA", estado: "DF", cep: "70873050", celular: "6181185885", email: "sandro.garbin@caixa.gov.br", empresa: "CAIXA ECONÔMICA FEDERAL", data_cadastro: new Date("2013-09-23 05:57:40"), hashed_password: "04D271F5E3B498DE06B6C82BE685868C", pontos: 0 },
     { id: "9982451", nome: "RUBEM RECH", documento: "891.376.710-49", endereco: "RUA RIACHUELO, 1616", bairro: "CENTRO HISTÓRICO", cidade: "PORTO ALEGRE", estado: "RS", cep: "90010273", telefone: "51 30730950", celular: "51 81516225", email: "rubem.rech@gmail.com", empresa: "COPROBEL", data_cadastro: new Date("2013-09-25 06:25:40"), hashed_password: "C1CF271B1260618F786A8BBA4A796353", pontos: 0 },
     { id: "9982452", nome: "LAURY DO AMARAL", documento: "070.315.627-67", cep: "01311100", telefone: "11 32665052", celular: "21 8374-0351", email: "laury.amaral@dinsmorecompass.com.br", data_cadastro: new Date("2013-09-27 12:20:48"), hashed_password: "2D84241FDEF22D8D84BDD9B6FAC96217", pontos: 9 },
     { id: "9982453", nome: "ELYSON MELO E SILVA", documento: "052.810.507-88", celular: "(21) 8744-5016", email: "elysonmelo@yahoo.com.br", data_cadastro: new Date("2013-09-30 12:46:53"), hashed_password: "4A00447011400E7BE17914FD7BE0D93F", pontos: 9 },
@@ -127,8 +127,8 @@ spa.fake = (function() {
           var client = getClient(data.id),
               client_map = {};
           if (client) {
-            client_map.id = client.id,
-            client_map.nome = client.nome
+            client_map.id = client.id;
+            client_map.nome = client.nome;
           } else {
             client_map.error = 'Não existe cliente com esse id';
           }
@@ -227,5 +227,5 @@ spa.fake = (function() {
 
   return {
     mockSio: mockSio
-  }
+  };
 }());

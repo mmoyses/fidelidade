@@ -56,7 +56,7 @@ spa.util = (function () {
     year = date.getFullYear().toString();
 
     return day + '/' + month + '/' + year;
-  }
+  };
 
   return {
     makeError: makeError,

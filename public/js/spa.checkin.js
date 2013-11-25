@@ -1,28 +1,28 @@
 spa.checkin = (function() {
 	'use strict';
   var configMap = {
-      main_html: String()
-      + '<div class="check-in">'
-        + '<form class="form-inline">'
-          + '<fieldset>'
-            + '<legend>Check-in</legend>'
-            + '<div class="form-group">'
-              + '<label class="sr-only" for="id">Id do cliente</label>'
-              + '<input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">'
-            + '</div>'
-            + '<button type="submit" class="btn btn-default">Procurar</button>'
-            + '<span class="help-block">&nbsp;</span>'
-          + '</fieldset>'
-        + '</form>'
-        + '<form class="form-checkin">'
-          + '<div class="form-group">'
-            + '<label for="date">Data</label>'
-            + '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>'
-          + '</div>'
-          + '<button class="btn btn-primary" disabled="disabled">Check-in</button>'
-          + '<span class="help-inline"></span>'
-        + '</form>'
-      + '</div>',
+      main_html: String() +
+        '<div class="check-in">' +
+          '<form class="form-inline">' +
+            '<fieldset>' +
+              '<legend>Check-in</legend>' +
+              '<div class="form-group">' +
+                '<label class="sr-only" for="id">Id do cliente</label>' +
+                '<input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">' +
+              '</div>' +
+              '<button type="submit" class="btn btn-default">Procurar</button>' +
+              '<span class="help-block">&nbsp;</span>' +
+            '</fieldset>' +
+          '</form>' +
+          '<form class="form-checkin">' +
+            '<div class="form-group">' +
+              '<label for="date">Data</label>' +
+              '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>' +
+            '</div>' +
+            '<button class="btn btn-primary" disabled="disabled">Check-in</button>' +
+            '<span class="help-inline"></span>' +
+          '</form>' +
+        '</div>',
       settable_map: {
         client_model: true
       },
@@ -47,7 +47,7 @@ spa.checkin = (function() {
       $checkInBtn: $container.find('.btn-primary'),
       $formGroup: $container.find('.form-inline .form-group'),
       $helpInline: $container.find('.form-checkin .help-inline')
-    }
+    };
   };
 
   onGetClient = function(event, client_map) {
@@ -62,7 +62,7 @@ spa.checkin = (function() {
         jqueryMap.$date.removeAttr('disabled');
       }
     }
-  }
+  };
 
   onSubmitClient = function() {
     var client,
@@ -152,7 +152,7 @@ spa.checkin = (function() {
       jqueryMap = {};
     }
     stateMap.$container = null;
-  }
+  };
 
   return {
     initModule: initModule,

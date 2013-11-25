@@ -11,34 +11,34 @@ spa.shell = (function() {
         relatorios: true
       }                                                                                                                                                                                                                    
     },
-    main_html: String()
-      + '<nav class="navbar navbar-fixed-top navbar-inverse">'
-        + '<div class="navbar-header">'
-          + '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">'
-            + '<span class="sr-only">Toggle navigation</span>'
-            + '<span class="icon-bar"></span>'
-            + '<span class="icon-bar"></span>'
-            + '<span class="icon-bar"></span>'
-          + '</button>'
-          + '<a class="navbar-brand" href="#!page=home">Programa de Recompensas</a>'
-        + '</div>'
-        + '<div class="collapse navbar-collapse" id="navbar-collapse">'
-          + '<ul class="nav navbar-nav" id="menu">'
-            + '<li class="home"><a href="#!page=home"><span class="glyphicon glyphicon-home"></span></a></li>'
-          + '</ul>'
-          + '<ul class="nav navbar-nav pull-right">'
-            + '<li class="divider-vertical"></li>'
-            + '<li class="dropdown">'
-              + '<a class="dropdown-toggle" data-toggle="dropdown" href="#"></a>'
-              + '<ul class="dropdown-menu">'
-                + '<li><a href="/sair">Sair</a></li>'
-              + '</ul>'
-            + '</li>'
-          + '</ul>'
-        + '</div>'
-      + '</nav>'
-      + '<div class="container"></div>'
-      + '<div id="push"></div>'
+    main_html: String() +
+      '<nav class="navbar navbar-fixed-top navbar-inverse">' +
+        '<div class="navbar-header">' +
+          '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">' +
+            '<span class="sr-only">Toggle navigation</span>' +
+            '<span class="icon-bar"></span>' +
+            '<span class="icon-bar"></span>' +
+            '<span class="icon-bar"></span>' +
+          '</button>' +
+          '<a class="navbar-brand" href="#!page=home">Programa de Recompensas</a>' +
+        '</div>' +
+        '<div class="collapse navbar-collapse" id="navbar-collapse">' +
+          '<ul class="nav navbar-nav" id="menu">' +
+            '<li class="home"><a href="#!page=home"><span class="glyphicon glyphicon-home"></span></a></li>' +
+          '</ul>' +
+          '<ul class="nav navbar-nav pull-right">' +
+            '<li class="divider-vertical"></li>' +
+            '<li class="dropdown">' +
+              '<a class="dropdown-toggle" data-toggle="dropdown" href="#"></a>' +
+              '<ul class="dropdown-menu">' +
+                '<li><a href="/sair">Sair</a></li>' +
+              '</ul>' +
+            '</li>' +
+          '</ul>' +
+        '</div>' +
+      '</nav>' +
+      '<div class="container"></div>' +
+      '<div id="push"></div>'
     },
     stateMap = {
       $container: null,

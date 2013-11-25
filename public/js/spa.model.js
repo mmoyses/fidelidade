@@ -63,7 +63,7 @@ spa.model = (function() {
       checkIn: checkIn,
       getHospedagens: getHospedagens,
       init: init
-    }
+    };
   }());
 
   hospedagem = (function() {
@@ -89,7 +89,7 @@ spa.model = (function() {
 
     _publish_checkout = function(checkout_map) {
       $.gevent.publish('spa-checkout', [checkout_map]);
-    }
+    };
 
     init = function() {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();

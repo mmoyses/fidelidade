@@ -43,5 +43,6 @@
   "regexdash": true,
   "browser": true,
   "wsh": true,
-  "sub": true
+  "sub": true,
+  "laxbreak": true
 }
