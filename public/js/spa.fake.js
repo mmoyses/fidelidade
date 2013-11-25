@@ -93,7 +93,7 @@ spa.fake = (function() {
     return true;
   };
 
-  checkOut = function(id, date) {
+  checkOut = function(id, date, price) {
     var i, index,
         failed = false,
         hospedagens = getHospedagemList(spa.util.getEmpresa());
@@ -101,9 +101,12 @@ spa.fake = (function() {
       if (hospedagens[i].id === id) {
         if (hospedagens[i].data_checkin > date)
           failed = true;
-        else
+        else {
           hospedagens[i].data_checkout = date;
-        break;
+          hospedagens[i].pontos = Number((price * .01).toFixed(2));
+          console.log(hospedagens[i]);
+          break;
+        }
       }
     }
     return !failed;
@@ -176,9 +179,10 @@ spa.fake = (function() {
         setTimeout(function() {
           var id = Number(data.id),
               date = data.date,
+              price = data.price,
               checkout_map = {};
-          if (id && date) {
-            if (checkOut(id, date)) {
+          if (id && date && price) {
+            if (checkOut(id, date, price)) {
               checkout_map.msg = 'Check-out realizado com sucesso';
               checkout_map.id = id;
             } else

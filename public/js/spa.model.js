@@ -80,11 +80,11 @@ spa.model = (function() {
       $.gevent.publish('spa-getactivelist', [hospedagem_map]);
     };
 
-    checkOut = function(id, date) {
+    checkOut = function(id, date, price) {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;
-      sio.emit('checkout', { id: id, date: date });
+      sio.emit('checkout', { id: id, date: date, price: price });
     };
 
     _publish_checkout = function(checkout_map) {

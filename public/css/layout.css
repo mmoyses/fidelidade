@@ -59,14 +59,16 @@ code {
   margin-right: 2px;
 }
 
-.hasDatepicker {
-  width: 200px;
-}
-
 #wrap .help-inline {
   margin-left: 10px;
 }
 
 .main h1 {
   text-align: center;
+}
+
+nav .divider-vertical {
+  height: 50px;
+  border-right: 1px solid #222222;
+  border-left: 1px solid #111111;
 }

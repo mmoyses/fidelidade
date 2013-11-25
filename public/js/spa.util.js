@@ -1,6 +1,6 @@
 spa.util = (function () {
   'use strict';
-  var makeError, setConfigMap, setUser, getEmpresa, getDate,
+  var makeError, setConfigMap, setUser, getEmpresa, getDate, convertPrice,
       stateMap = {
         user: null
       };
@@ -58,11 +58,17 @@ spa.util = (function () {
     return day + '/' + month + '/' + year;
   };
 
+  convertPrice = function(price) {
+    var p = Number(price.replace(',', '#').replace('.', ',').replace('#', '.'));
+    return p;
+  };
+
   return {
     makeError: makeError,
     setConfigMap: setConfigMap,
     setUser: setUser,
     getEmpresa: getEmpresa,
-    getDate: getDate
+    getDate: getDate,
+    convertPrice: convertPrice
   };
 }());
