@@ -4,19 +4,10 @@ spa.model = (function() {
       client, hospedagem, user, initModule;
 
   client = (function() {
-    var getList, getClient, checkIn, init, getHospedagens, _publish_gethospedagens,
-    _publish_getclient, _publish_checkin;
+    var getList, getClient, init, _publish_getclient;
 
     _publish_getclient = function(client_map) {
       $.gevent.publish('spa-getclient', [client_map]);
-    };
-
-    _publish_checkin = function(checkin_map) {
-      $.gevent.publish('spa-checkin', [checkin_map]);
-    };
-
-    _publish_gethospedagens = function(hospedagens_map) {
-      $.gevent.publish('spa-gethospedagens', [hospedagens_map]);
     };
 
     getList = function() {
@@ -31,6 +22,54 @@ spa.model = (function() {
         return false;
       sio.emit('getclient', { id: id });
       return true;
+    };
+
+    init = function() {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.on('getclient', _publish_getclient);
+    };
+
+    return {
+      getList: getList,
+      getClient: getClient,
+      init: init
+    };
+  }());
+
+  hospedagem = (function() {
+    var getActiveList, _publish_getactivelist, checkOut, checkIn, _publish_checkout, _publish_checkin,
+    getHospedagens, _publish_gethospedagens, init;
+
+    getActiveList = function(hotel_id) {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.emit('getactivelist', { hotel: hotel_id });
+    };
+
+    _publish_getactivelist = function(hospedagem_map) {
+      $.gevent.publish('spa-getactivelist', [hospedagem_map]);
+    };
+
+    _publish_checkin = function(checkin_map) {
+      $.gevent.publish('spa-checkin', [checkin_map]);
+    };
+
+    _publish_gethospedagens = function(hospedagens_map) {
+      $.gevent.publish('spa-gethospedagens', [hospedagens_map]);
+    };
+
+    checkOut = function(id, date, price) {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.emit('checkout', { id: id, date: date, price: price });
+    };
+
+    _publish_checkout = function(checkout_map) {
+      $.gevent.publish('spa-checkout', [checkout_map]);
     };
 
     checkIn = function(id, date) {
@@ -51,57 +90,18 @@ spa.model = (function() {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;
-      sio.on('getclient', _publish_getclient);
+      sio.on('getactivelist', _publish_getactivelist);
+      sio.on('checkout', _publish_checkout);
       sio.on('checkin', _publish_checkin);
       sio.on('gethospedagens', _publish_gethospedagens);
     };
 
     return {
-      getList: getList,
-      getClient: getClient,
-      checkIn: checkIn,
-      getHospedagens: getHospedagens,
-      init: init
-    };
-  }());
-
-  hospedagem = (function() {
-    var getActiveList, _publish_getactivelist, checkOut, _publish_checkout, init;
-
-    getActiveList = function(hotel_id) {
-      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
-      if (!sio)
-        return false;
-      sio.emit('getactivelist', { hotel: hotel_id });
-    };
-
-    _publish_getactivelist = function(hospedagem_map) {
-      $.gevent.publish('spa-getactivelist', [hospedagem_map]);
-    };
-
-    checkOut = function(id, date, price) {
-      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
-      if (!sio)
-        return false;
-      sio.emit('checkout', { id: id, date: date, price: price });
-    };
-
-    _publish_checkout = function(checkout_map) {
-      $.gevent.publish('spa-checkout', [checkout_map]);
-    };
-
-    init = function() {
-      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
-      if (!sio)
-        return false;
-      sio.on('getactivelist', _publish_getactivelist);
-      sio.on('checkout', _publish_checkout);
-    };
-
-    return {
       getActiveList: getActiveList,
       init: init,
-      checkOut: checkOut
+      checkOut: checkOut,
+      checkIn: checkIn,
+      getHospedagens: getHospedagens
     };
   }());
 

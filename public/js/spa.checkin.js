@@ -15,18 +15,22 @@ spa.checkin = (function() {
             '</fieldset>' +
           '</form>' +
           '<form class="form-checkin">' +
-            '<div class="form-group">' +
-              '<label for="date">Data</label>' +
-              '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>' +
+            '<div class="row">' +
+              '<div class="form-group col-xs-3">' +
+                '<label for="date">Data</label>' +
+                '<input type="text" id="date" name="date" class="form-control" disabled="disabled"/>' +
+              '</div>' +
             '</div>' +
             '<button class="btn btn-primary" disabled="disabled">Check-in</button>' +
             '<span class="help-inline"></span>' +
           '</form>' +
         '</div>',
       settable_map: {
-        client_model: true
+        client_model: true,
+        hospedagem_model: true
       },
-      client_model: null
+      client_model: null,
+      hospedagem_model: null
     },
     stateMap = {
       $container: null
@@ -88,7 +92,7 @@ spa.checkin = (function() {
       d = date.split('/');
       month = Number(d[1]) - 1;
       checkInDate = new Date(d[2], month, d[0], '12', '00', '00');
-      configMap.client_model.checkIn(id, checkInDate);
+      configMap.hospedagem_model.checkIn(id, checkInDate);
       jqueryMap.$helpInline.attr('class', 'help-inline');
       jqueryMap.$helpInline.html('');
     }

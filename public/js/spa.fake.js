@@ -132,7 +132,7 @@ spa.fake = (function() {
     var client = getClient(id),
         length = _hospedagens.length,
         lastId = _hospedagens[length - 1].id,
-        empresa = spa.util.getEmpresa(),
+        empresa = spa.user.getUser().empresa,
         hospedagens = getHospedagemList(empresa),
         i, found;
     for (i = 0; i < hospedagens.length; i++) {
@@ -150,7 +150,7 @@ spa.fake = (function() {
   checkOut = function(id, date, price) {
     var i,
         failed = false,
-        hospedagens = getHospedagemList(spa.util.getEmpresa());
+        hospedagens = getHospedagemList(spa.user.getUser().empresa);
     for (i = 0; i < hospedagens.length; i++) {
       if (hospedagens[i].id === id) {
         if (hospedagens[i].data_checkin > date)

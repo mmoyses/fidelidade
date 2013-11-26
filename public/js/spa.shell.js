@@ -117,6 +117,12 @@ spa.shell = (function() {
         jqueryMap.$menu.find('.' + _s_page_proposed).addClass('active');
         spa[s_page_proposed].initModule(jqueryMap.$innerContainer);
       }
+    } else {
+      if (!_s_page_proposed) {
+        anchor_map_proposed._s_page = 'home';
+        jqueryMap.$menu.find('.home').addClass('active');
+        spa.home.initModule(jqueryMap.$innerContainer);
+      }
     }
 
     return false;
@@ -135,24 +141,23 @@ spa.shell = (function() {
       schema_map: configMap.anchor_schema_map
     });
 
+    spa.user.configModule({
+      user_model: spa.model.user
+    });
+    spa.user.initModule($container);
     spa.checkin.configModule({
-      client_model: spa.model.client
+      client_model: spa.model.client,
+      hospedagem_model: spa.model.hospedagem
     });
     spa.checkout.configModule({
       client_model: spa.model.client,
       hospedagem_model: spa.model.hospedagem
     });
-    spa.user.configModule({
-      user_model: spa.model.user
-    });
-    spa.user.initModule($container);
     spa.consultar.configModule({
       client_model: spa.model.client
     });
 
-    $(window).bind('hashchange', onHashchange).trigger('hashchange');
-
-    setPageAnchor('home');
+    $(window).bind('hashchange', onHashchange);
   };
 
   return {

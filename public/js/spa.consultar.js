@@ -49,7 +49,7 @@ spa.consultar = (function() {
         jqueryMap.$formGroup.addClass('has-error');
       } else {
         jqueryMap.$helpBlock.html(client_map.nome);
-        configMap.client_model.getHospedagens(spa.util.getEmpresa(), client_id);
+        configMap.client_model.getHospedagens(spa.user.getUser().empresa, client_id);
       }
     }
   };

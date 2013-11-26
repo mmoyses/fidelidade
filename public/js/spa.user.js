@@ -11,7 +11,7 @@ spa.user = (function() {
       user: null
     },
     jqueryMap = {},
-    setJqueryMap, onGetUser, setMenu, configModule, initModule;
+    setJqueryMap, onGetUser, setMenu, getUser, configModule, initModule;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -24,7 +24,6 @@ spa.user = (function() {
 
   onGetUser = function(event, user_map) {
     stateMap.user = $.extend(true, {}, user_map);
-    spa.util.setUser(stateMap.user);
     setMenu();
     jqueryMap.$user.html(stateMap.user.nome + '<b class="caret"/>');
   };
@@ -61,6 +60,11 @@ spa.user = (function() {
       title = menu[i].title;
       jqueryMap.$menu.append('<li class="' + link + '"><a href="#!page=' + link + '">' + title + '</a></li>');
     }
+    $(window).trigger('hashchange');
+  };
+
+  getUser = function() {
+    return stateMap.user;
   };
 
   configModule = function(input_map) {
@@ -83,6 +87,7 @@ spa.user = (function() {
 
   return {
     configModule: configModule,
-    initModule: initModule
+    initModule: initModule,
+    getUser: getUser
   };
 }());

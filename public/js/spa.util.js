@@ -1,9 +1,6 @@
 spa.util = (function () {
   'use strict';
-  var makeError, setConfigMap, setUser, getEmpresa, getDate, convertPrice,
-  stateMap = {
-    user: null
-  };
+  var makeError, setConfigMap, getDate, convertPrice;
 
   makeError = function(name_text, msg_text, data) {
     var error = new Error();
@@ -35,16 +32,6 @@ spa.util = (function () {
     }
   };
 
-  setUser = function(user) {
-    stateMap.user = user;
-  };
-
-  getEmpresa = function() {
-    if (stateMap.user && stateMap.user.empresa)
-      return stateMap.user.empresa;
-    return null;
-  };
-
   getDate = function(date) {
     var day, month, year;
     day = date.getDate().toString();
@@ -66,8 +53,6 @@ spa.util = (function () {
   return {
     makeError: makeError,
     setConfigMap: setConfigMap,
-    setUser: setUser,
-    getEmpresa: getEmpresa,
     getDate: getDate,
     convertPrice: convertPrice
   };

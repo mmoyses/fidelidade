@@ -39,7 +39,7 @@ spa.checkout = (function() {
     },
     jqueryMap = {},
     setJqueryMap, onSubmitCheckout, onDateChange, onPriceChange, onGetActiveList,
-    onCheckOut, configModule, initModule, removeComponent;
+    onCheckOut, onGetUser, configModule, initModule, removeComponent;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -146,6 +146,10 @@ spa.checkout = (function() {
     }
   };
 
+  onGetUser = function() {
+    configMap.hospedagem_model.getActiveList(spa.user.getUser().empresa);
+  };
+
   initModule = function($container) {
     stateMap.$container = $container;
     $container.html(configMap.main_html);
@@ -159,7 +163,10 @@ spa.checkout = (function() {
 
     $.gevent.subscribe(jqueryMap.$formCheckOut, 'spa-getactivelist', onGetActiveList);
     $.gevent.subscribe(jqueryMap.$hospedagem, 'spa-checkout', onCheckOut);
-    configMap.hospedagem_model.getActiveList(spa.util.getEmpresa());
+    if (!spa.user.getUser())
+      $.gevent.subscribe(jqueryMap.$container, 'spa-getuser', onGetUser);
+    else
+      configMap.hospedagem_model.getActiveList(spa.user.getUser().empresa);
   };
 
   removeComponent = function() {
