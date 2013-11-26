@@ -21,7 +21,7 @@
   "globals": { // Globals variables.
     "angular": true,
     "spa": true,
-    "$", true
+    "$": true
   },
   "predef": [ // Extra globals.
     "define",
@@ -43,6 +43,5 @@
   "regexdash": true,
   "browser": true,
   "wsh": true,
-  "sub": true,
-  "laxbreak": true
+  "sub": true
 }

@@ -1,12 +1,11 @@
 spa.model = (function() {
   'use strict';
-  var configMap = {},
-      stateMap = {},
-      isFakeData = true,
+  var isFakeData = true,
       client, hospedagem, user, initModule;
 
   client = (function() {
-    var getList, getClient, checkIn, init, getHospedagens, _publish_gethospedagens, _publish_getclient, _publish_checkin;
+    var getList, getClient, checkIn, init, getHospedagens, _publish_gethospedagens,
+    _publish_getclient, _publish_checkin;
 
     _publish_getclient = function(client_map) {
       $.gevent.publish('spa-getclient', [client_map]);

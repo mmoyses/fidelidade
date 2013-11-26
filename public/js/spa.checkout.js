@@ -38,7 +38,8 @@ spa.checkout = (function() {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, onSubmitCheckout, onDateChange, onPriceChange, onGetActiveList, onCheckOut, configModule, initModule, removeComponent;
+    setJqueryMap, onSubmitCheckout, onDateChange, onPriceChange, onGetActiveList,
+    onCheckOut, configModule, initModule, removeComponent;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -86,7 +87,7 @@ spa.checkout = (function() {
       jqueryMap.$checkOutBtn.removeAttr('disabled');
     else
       jqueryMap.$checkOutBtn.attr('disabled','disabled');
-    return false;  
+    return false;
   };
 
   onCheckOut = function(event, checkout_map) {
@@ -135,7 +136,8 @@ spa.checkout = (function() {
           id = hospedagens[i].id;
           client = hospedagens[i].client;
           date = hospedagens[i].data_checkin;
-          jqueryMap.$hospedagem.append('<label class="radio"><input type="radio" name="hospedagem" value="' + id + '"/>' + client + ' (' + spa.util.getDate(date) + ')</label>');
+          jqueryMap.$hospedagem.append('<label class="radio"><input type="radio" name="hospedagem" value="' +
+            id + '"/>' + client + ' (' + spa.util.getDate(date) + ')</label>');
         }
         $('input:radio').bind('change', function() {
           jqueryMap.$date.removeAttr('disabled');
@@ -173,4 +175,4 @@ spa.checkout = (function() {
     removeComponent: removeComponent,
     configModule: configModule
   };
-}()); 
+}());

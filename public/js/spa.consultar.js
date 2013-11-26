@@ -55,8 +55,7 @@ spa.consultar = (function() {
   };
 
   onSubmitClient = function() {
-    var client,
-        id = jqueryMap.$client.val();
+    var id = jqueryMap.$client.val();
     jqueryMap.$helpBlock.html('&nbsp;').removeClass('text-error');
     jqueryMap.$formGroup.removeClass('has-error');
     if (jqueryMap.$table)
@@ -77,12 +76,16 @@ spa.consultar = (function() {
         jqueryMap.$consulta.append('<p class="table">' + error + '</p>');
         jqueryMap.$table = jqueryMap.$consulta.find('.table');
       } else {
-        jqueryMap.$consulta.append('<table class="table table-striped"><thead><tr><th>Data check-in</th><th>Data check-out</th><th>Pontos</th></tr></thead><tbody class="tbody"></tbody></table>');
+        jqueryMap.$consulta.append('<table class="table table-striped"><thead><tr>' +
+            '<th>Data check-in</th><th>Data check-out</th><th>Pontos</th>' +
+          '</tr></thead><tbody class="tbody"></tbody></table>');
         jqueryMap.$table = jqueryMap.$consulta.find('.table');
         $tbody = jqueryMap.$table.find('.tbody');
         hospedagens = hospedagens_map.hospedagens;
         for (i = 0; i < hospedagens.length; i++) {
-          $tbody.append('<tr><td>' + spa.util.getDate(hospedagens[i].data_checkin) + '</td><td>' + spa.util.getDate(hospedagens[i].data_checkout) + '</td><td>' + hospedagens[i].pontos + '</td></tr>');
+          $tbody.append('<tr><td>' + spa.util.getDate(hospedagens[i].data_checkin) +
+            '</td><td>' + spa.util.getDate(hospedagens[i].data_checkout) +
+            '</td><td>' + hospedagens[i].pontos + '</td></tr>');
         }
       }
     }

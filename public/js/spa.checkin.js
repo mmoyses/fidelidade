@@ -32,7 +32,8 @@ spa.checkin = (function() {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, onSubmitClient, onSubmitCheckin, onGetClient, onDateChange, onCheckIn, configModule, initModule, removeComponent;
+    setJqueryMap, onSubmitClient, onSubmitCheckin, onGetClient, onDateChange,
+    onCheckIn, configModule, initModule, removeComponent;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -65,8 +66,7 @@ spa.checkin = (function() {
   };
 
   onSubmitClient = function() {
-    var client,
-        id = jqueryMap.$client.val();
+    var id = jqueryMap.$client.val();
     jqueryMap.$helpBlock.html('&nbsp;').removeClass('text-error');
     jqueryMap.$date.val('');
     jqueryMap.$checkInBtn.attr('disabled','disabled');

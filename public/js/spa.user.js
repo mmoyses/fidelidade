@@ -1,17 +1,17 @@
 spa.user = (function() {
   'use strict';
   var configMap = {
-        settable_map: {
-          user_model: true
-        },
-        user_model: null
+      settable_map: {
+        user_model: true
       },
-      stateMap = {
-        $container: null,
-        user: null
-      },
-      jqueryMap = {},
-      setJqueryMap, onGetUser, setMenu, configModule, initModule;
+      user_model: null
+    },
+    stateMap = {
+      $container: null,
+      user: null
+    },
+    jqueryMap = {},
+    setJqueryMap, onGetUser, setMenu, configModule, initModule;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;

@@ -1,7 +1,7 @@
 spa.shell = (function() {
   'use strict';
   var configMap = {
-    anchor_schema_map: { 
+    anchor_schema_map: {
       page: {
         home: true,
         checkin: true,
@@ -9,7 +9,7 @@ spa.shell = (function() {
         consultar: true,
         usuarios: true,
         relatorios: true
-      }                                                                                                                                                                                                                    
+      }
     },
     main_html: String() +
       '<nav class="navbar navbar-fixed-top navbar-inverse">' +
@@ -39,13 +39,13 @@ spa.shell = (function() {
       '</nav>' +
       '<div class="container"></div>' +
       '<div id="push"></div>'
-    },
-    stateMap = {
-      $container: null,
-      anchor_map: {}
-    },
-    jqueryMap = {},
-    copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, setPageAnchor, initModule;
+  },
+  stateMap = {
+    $container: null,
+    anchor_map: {}
+  },
+  jqueryMap = {},
+  copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, setPageAnchor, initModule;
 
   copyAnchorMap = function() {
     return $.extend(true, {}, stateMap.anchor_map);
@@ -92,7 +92,7 @@ spa.shell = (function() {
     return bool_return;
   };
 
-  onHashchange = function(event) {
+  onHashchange = function() {
     var anchor_map_previous = copyAnchorMap(),
         anchor_map_proposed, _s_page_previous, _s_page_proposed, s_page_proposed;
 

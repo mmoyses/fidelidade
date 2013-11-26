@@ -7,7 +7,7 @@ module.exports = function(passport) {
   //Serialize sessions
   passport.serializeUser(function(user, done) {
     if (user.username)
-      done(null, user.username)
+      done(null, user.username);
     else
       done(null, user.id);
   });

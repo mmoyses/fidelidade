@@ -1,9 +1,9 @@
 spa.util = (function () {
   'use strict';
   var makeError, setConfigMap, setUser, getEmpresa, getDate, convertPrice,
-      stateMap = {
-        user: null
-      };
+  stateMap = {
+    user: null
+  };
 
   makeError = function(name_text, msg_text, data) {
     var error = new Error();

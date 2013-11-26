@@ -1,16 +1,16 @@
 spa.home = (function() {
   'use strict';
   var configMap = {
-    main_html: String() + 
+    main_html: String() +
       '<div class="main">' +
         '<h1>Bem vindo ao Programa de Recompensas</h1>' +
       '</div>'
-    },
-    stateMap = {
-      $container: null
-    },
-    jqueryMap = {},
-    setJqueryMap, initModule, removeComponent;
+  },
+  stateMap = {
+    $container: null
+  },
+  jqueryMap = {},
+  setJqueryMap, initModule, removeComponent;
 
   setJqueryMap = function () {
     var $container = stateMap.$container;
