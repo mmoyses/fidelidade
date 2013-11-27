@@ -36,8 +36,8 @@ spa.checkin = (function() {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, onSubmitClient, onSubmitCheckin, onGetClient, onDateChange,
-    onCheckIn, configModule, initModule, removeComponent;
+    setJqueryMap, onSetClient, submitClient, onSubmitCheckin, onGetClient, onDateChange,
+    onCheckIn, configModule, initModule, removeComponent, setParameters;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -65,12 +65,19 @@ spa.checkin = (function() {
       } else {
         jqueryMap.$helpBlock.html(client_map.nome);
         jqueryMap.$date.removeAttr('disabled');
+        jqueryMap.$date.focus();
       }
     }
   };
 
-  onSubmitClient = function() {
+  onSetClient = function() {
     var id = jqueryMap.$client.val();
+    spa.shell.changeAnchorPart({ page: 'checkin', _page: { client: id } });
+    return false;
+  };
+
+  submitClient = function(id) {
+    jqueryMap.$client.val(id);
     jqueryMap.$helpBlock.html('&nbsp;').removeClass('text-error');
     jqueryMap.$date.val('');
     jqueryMap.$checkInBtn.attr('disabled','disabled');
@@ -142,12 +149,13 @@ spa.checkin = (function() {
     setJqueryMap();
     jqueryMap.$date.mask('99/99/9999');
     jqueryMap.$date.datepicker({ dateFormat: 'dd/mm/yy' });
-    jqueryMap.$formClient.bind('submit', onSubmitClient);
+    jqueryMap.$formClient.bind('submit', onSetClient);
     jqueryMap.$formCheckIn.bind('submit', onSubmitCheckin);
     jqueryMap.$date.bind('change', onDateChange);
 
     $.gevent.subscribe(jqueryMap.$formClient, 'spa-getclient', onGetClient);
     $.gevent.subscribe(jqueryMap.$formCheckIn, 'spa-checkin', onCheckIn);
+    jqueryMap.$client.focus();
   };
 
   removeComponent = function() {
@@ -158,9 +166,16 @@ spa.checkin = (function() {
     stateMap.$container = null;
   };
 
+  setParameters = function(page) {
+    if (page.client) {
+      submitClient(page.client);
+    }
+  };
+
   return {
     initModule: initModule,
     removeComponent: removeComponent,
-    configModule: configModule
+    configModule: configModule,
+    setParameters: setParameters
   };
 }());

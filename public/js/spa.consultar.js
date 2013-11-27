@@ -16,15 +16,18 @@ spa.consultar = (function() {
           '</form>' +
         '</div>',
       settable_map: {
-        client_model: true
+        client_model: true,
+        hospedagem_model: true
       },
-      client_model: null
+      client_model: null,
+      hospedagem_model: null
     },
     stateMap = {
       $container: null
     },
     jqueryMap = {},
-    setJqueryMap, onSubmitClient, onGetClient, onGetHospedagens, configModule, initModule, removeComponent;
+    setJqueryMap, submitClient, onSetClient, onGetClient, onGetHospedagens, configModule, initModule,
+    removeComponent, setParameters;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -49,13 +52,19 @@ spa.consultar = (function() {
         jqueryMap.$formGroup.addClass('has-error');
       } else {
         jqueryMap.$helpBlock.html(client_map.nome);
-        configMap.client_model.getHospedagens(spa.user.getUser().empresa, client_id);
+        configMap.hospedagem_model.getHospedagens(spa.user.getUser().empresa, client_id);
       }
     }
   };
 
-  onSubmitClient = function() {
+  onSetClient = function() {
     var id = jqueryMap.$client.val();
+    spa.shell.changeAnchorPart({ page: 'consultar', _page: { client: id } });
+    return false;
+  };
+
+  submitClient = function(id) {
+    jqueryMap.$client.val(id);
     jqueryMap.$helpBlock.html('&nbsp;').removeClass('text-error');
     jqueryMap.$formGroup.removeClass('has-error');
     if (jqueryMap.$table)
@@ -64,6 +73,7 @@ spa.consultar = (function() {
       return false;
     }
     configMap.client_model.getClient(id);
+    jqueryMap.$client.blur();
     
     return false;
   };
@@ -105,10 +115,11 @@ spa.consultar = (function() {
     stateMap.$container = $container;
     $container.html(configMap.main_html);
     setJqueryMap();
-    jqueryMap.$formClient.bind('submit', onSubmitClient);
+    jqueryMap.$formClient.bind('submit', onSetClient);
 
     $.gevent.subscribe(jqueryMap.$formClient, 'spa-getclient', onGetClient);
     $.gevent.subscribe(jqueryMap.$consulta, 'spa-gethospedagens', onGetHospedagens);
+    jqueryMap.$client.focus();
   };
 
   removeComponent = function() {
@@ -119,9 +130,16 @@ spa.consultar = (function() {
     stateMap.$container = null;
   };
 
+  setParameters = function(page) {
+    if (page.client) {
+      submitClient(page.client);
+    }
+  };
+
   return {
     initModule: initModule,
     removeComponent: removeComponent,
-    configModule: configModule
+    configModule: configModule,
+    setParameters: setParameters
   };
 }());

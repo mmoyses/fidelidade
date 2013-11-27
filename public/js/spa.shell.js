@@ -9,6 +9,9 @@ spa.shell = (function() {
         consultar: true,
         usuarios: true,
         relatorios: true
+      },
+      _page: {
+        client: true
       }
     },
     main_html: String() +
@@ -45,7 +48,7 @@ spa.shell = (function() {
     anchor_map: {}
   },
   jqueryMap = {},
-  copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, setPageAnchor, initModule;
+  copyAnchorMap, setJquerymap, changeAnchorPart, onHashchange, initModule;
 
   copyAnchorMap = function() {
     return $.extend(true, {}, stateMap.anchor_map);
@@ -94,7 +97,7 @@ spa.shell = (function() {
 
   onHashchange = function() {
     var anchor_map_previous = copyAnchorMap(),
-        anchor_map_proposed, _s_page_previous, _s_page_proposed, s_page_proposed;
+        anchor_map_proposed, page_previous, page_proposed, s_page_proposed, s_page_previous, _page;
 
     try {
       anchor_map_proposed = $.uriAnchor.makeAnchorMap();
@@ -104,32 +107,33 @@ spa.shell = (function() {
     }
     stateMap.anchor_map = anchor_map_proposed;
 
-    _s_page_previous = anchor_map_previous._s_page;
-    _s_page_proposed = anchor_map_proposed._s_page;
+    page_previous = anchor_map_previous._s_page;
+    page_proposed = anchor_map_proposed._s_page;
 
-    if (!anchor_map_previous || _s_page_previous !== _s_page_proposed) {
+    if (!anchor_map_previous || page_previous !== page_proposed) {
       s_page_proposed = anchor_map_proposed.page;
+      s_page_previous = anchor_map_previous.page;
+      _page = anchor_map_proposed._page;
       if (s_page_proposed) {
-        if (spa[_s_page_previous]) {
-          jqueryMap.$menu.find('.' + _s_page_previous).removeClass('active');
-          spa[_s_page_previous].removeComponent();
+        if (spa[s_page_previous]) {
+          jqueryMap.$menu.find('.' + s_page_previous).removeClass('active');
+          spa[s_page_previous].removeComponent();
         }
-        jqueryMap.$menu.find('.' + _s_page_proposed).addClass('active');
+        jqueryMap.$menu.find('.' + s_page_proposed).addClass('active');
         spa[s_page_proposed].initModule(jqueryMap.$innerContainer);
+        if (_page)
+          spa[s_page_proposed].setParameters(_page);
       }
     } else {
-      if (!_s_page_proposed) {
+      if (!page_proposed) {
         anchor_map_proposed._s_page = 'home';
+        anchor_map_proposed.page = 'home';
         jqueryMap.$menu.find('.home').addClass('active');
         spa.home.initModule(jqueryMap.$innerContainer);
       }
     }
 
     return false;
-  };
-
-  setPageAnchor = function(position_type) {
-    return changeAnchorPart({ page: position_type });
   };
 
   initModule = function($container) {
@@ -154,13 +158,15 @@ spa.shell = (function() {
       hospedagem_model: spa.model.hospedagem
     });
     spa.consultar.configModule({
-      client_model: spa.model.client
+      client_model: spa.model.client,
+      hospedagem_model: spa.model.hospedagem
     });
 
     $(window).bind('hashchange', onHashchange);
   };
 
   return {
-    initModule: initModule
+    initModule: initModule,
+    changeAnchorPart: changeAnchorPart
   };
 }());

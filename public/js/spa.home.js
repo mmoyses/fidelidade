@@ -10,7 +10,7 @@ spa.home = (function() {
     $container: null
   },
   jqueryMap = {},
-  setJqueryMap, initModule, removeComponent;
+  setJqueryMap, initModule, removeComponent, setParameters;
 
   setJqueryMap = function () {
     var $container = stateMap.$container;
@@ -34,8 +34,12 @@ spa.home = (function() {
     stateMap.$container = null;
   };
 
+  setParameters = function() {
+  };
+
   return {
     initModule: initModule,
-    removeComponent: removeComponent
+    removeComponent: removeComponent,
+    setParameters: setParameters
   };
 }());

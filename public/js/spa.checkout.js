@@ -39,7 +39,7 @@ spa.checkout = (function() {
     },
     jqueryMap = {},
     setJqueryMap, onSubmitCheckout, onDateChange, onPriceChange, onGetActiveList,
-    onCheckOut, onGetUser, configModule, initModule, removeComponent;
+    onCheckOut, onGetUser, configModule, initModule, removeComponent, setParameters;
 
   setJqueryMap = function() {
     var $container = stateMap.$container;
@@ -177,9 +177,13 @@ spa.checkout = (function() {
     stateMap.$container = null;
   };
 
+  setParameters = function() {
+  };
+
   return {
     initModule: initModule,
     removeComponent: removeComponent,
-    configModule: configModule
+    configModule: configModule,
+    setParameters: setParameters
   };
 }());
