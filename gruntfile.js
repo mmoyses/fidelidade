@@ -80,6 +80,17 @@ module.exports = function(grunt) {
               'app/frontend/spa.relatorios.js', 'app/frontend/spa.user.js', 'app/frontend/spa.shell.js'],
         dest: 'public/js/spa.js'
       }
+    },
+    uglify: {
+      my_target: {
+        options: {
+          sourceMap: 'public/js/spa.map.js',
+          sourceMappingURL: '/js/spa.map.js'
+        },
+        files: {
+          'public/js/spa.min.js': ['public/js/spa.js']
+        }
+      }
     }
   });
 
@@ -91,12 +102,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   //Making grunt default to force in order not to break the project.
   grunt.option('force', true);
 
   //Default task(s).
-  grunt.registerTask('default', ['jshint', 'concat', 'concurrent']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'concurrent']);
 
   //Test task.
   grunt.registerTask('test', ['mochaTest']);

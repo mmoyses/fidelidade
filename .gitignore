@@ -4,3 +4,5 @@
 node_modules/
 public/lib
 public/js/spa.js
+public/js/spa.min.js
+public/js/spa.map.js
