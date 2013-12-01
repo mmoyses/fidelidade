@@ -1,6 +1,6 @@
 spa.util = (function () {
   'use strict';
-  var makeError, setConfigMap, getDate, convertPrice;
+  var makeError, setConfigMap, getDate, convertPrice, toReal;
 
   makeError = function(name_text, msg_text, data) {
     var error = new Error();
@@ -50,10 +50,15 @@ spa.util = (function () {
     return p;
   };
 
+  toReal = function(price) {
+    return price.replace(',', '#').replace('.', ',').replace('#', '.');
+  };
+
   return {
     makeError: makeError,
     setConfigMap: setConfigMap,
     getDate: getDate,
-    convertPrice: convertPrice
+    convertPrice: convertPrice,
+    toReal: toReal
   };
 }());

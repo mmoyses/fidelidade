@@ -40,13 +40,13 @@ spa.model = (function() {
 
   hospedagem = (function() {
     var getActiveList, _publish_getactivelist, checkOut, checkIn, _publish_checkout, _publish_checkin,
-    getHospedagens, _publish_gethospedagens, init;
+    getHospedagens, _publish_gethospedagens, getRelatorio, _publish_getrelatorio, init;
 
-    getActiveList = function(hotel_id) {
+    getActiveList = function() {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;
-      sio.emit('getactivelist', { hotel: hotel_id });
+      sio.emit('getactivelist', {});
     };
 
     _publish_getactivelist = function(hospedagem_map) {
@@ -72,6 +72,10 @@ spa.model = (function() {
       $.gevent.publish('spa-checkout', [checkout_map]);
     };
 
+    _publish_getrelatorio = function(relatorio_map) {
+      $.gevent.publish('spa-getrelatorio', [relatorio_map]);
+    };
+
     checkIn = function(id, date) {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
@@ -79,11 +83,18 @@ spa.model = (function() {
       sio.emit('checkin', { id: id, date: date });
     };
 
-    getHospedagens = function(hotel_id, client_id) {
+    getHospedagens = function(client_id) {
       var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
       if (!sio)
         return false;
-      sio.emit('gethospedagens', { client: client_id, hotel: hotel_id });
+      sio.emit('gethospedagens', { client: client_id });
+    };
+
+    getRelatorio = function(startDate, endDate) {
+      var sio = isFakeData ? spa.fake.mockSio : spa.data.getSio();
+      if (!sio)
+        return false;
+      sio.emit('getrelatorio', { start: startDate, end: endDate });
     };
 
     init = function() {
@@ -94,6 +105,7 @@ spa.model = (function() {
       sio.on('checkout', _publish_checkout);
       sio.on('checkin', _publish_checkin);
       sio.on('gethospedagens', _publish_gethospedagens);
+      sio.on('getrelatorio', _publish_getrelatorio);
     };
 
     return {
@@ -101,7 +113,8 @@ spa.model = (function() {
       init: init,
       checkOut: checkOut,
       checkIn: checkIn,
-      getHospedagens: getHospedagens
+      getHospedagens: getHospedagens,
+      getRelatorio: getRelatorio
     };
   }());
 

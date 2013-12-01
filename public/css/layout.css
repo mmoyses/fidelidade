@@ -76,3 +76,19 @@ nav .divider-vertical {
 .hospedagem {
   margin-left: 15px;
 }
+
+.relatorio .btn {
+  margin-top: 24px;
+}
+
+.relatorio .start {
+  padding-right: 8px;
+}
+
+.relatorio .end {
+  padding-left: 8px;
+}
+
+.relatorio .form-group {
+  min-width: 110px;
+}

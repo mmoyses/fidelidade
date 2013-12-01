@@ -147,7 +147,7 @@ spa.checkout = (function() {
   };
 
   onGetUser = function() {
-    configMap.hospedagem_model.getActiveList(spa.user.getUser().empresa);
+    configMap.hospedagem_model.getActiveList();
   };
 
   initModule = function($container) {
@@ -166,7 +166,7 @@ spa.checkout = (function() {
     if (!spa.user.getUser())
       $.gevent.subscribe(jqueryMap.$container, 'spa-getuser', onGetUser);
     else
-      configMap.hospedagem_model.getActiveList(spa.user.getUser().empresa);
+      configMap.hospedagem_model.getActiveList();
   };
 
   removeComponent = function() {

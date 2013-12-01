@@ -52,7 +52,7 @@ spa.consultar = (function() {
         jqueryMap.$formGroup.addClass('has-error');
       } else {
         jqueryMap.$helpBlock.html(client_map.nome);
-        configMap.hospedagem_model.getHospedagens(spa.user.getUser().empresa, client_id);
+        configMap.hospedagem_model.getHospedagens(client_id);
       }
     }
   };

@@ -161,6 +161,9 @@ spa.shell = (function() {
       client_model: spa.model.client,
       hospedagem_model: spa.model.hospedagem
     });
+    spa.relatorios.configModule({
+      hospedagem_model: spa.model.hospedagem
+    });
 
     $(window).bind('hashchange', onHashchange);
   };

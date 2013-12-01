@@ -1,7 +1,8 @@
 spa.fake = (function() {
   'use strict';
   var getClientList, getClient, _clients, _hospedagens, getHospedagemList,
-  _empresas, _users, pad, checkIn, checkOut, getUser, mockSio;
+  getHospedagemByDate, _empresas, _users, pad, checkIn, checkOut, getUser,
+  mockSio;
 
   _clients = [
     { id: '9982442', nome: 'GUILHERME RIBEIRO ESPINOSA COSTA', documento: '111.466.247-00',
@@ -122,6 +123,18 @@ spa.fake = (function() {
     return list;
   };
 
+  getHospedagemByDate = function(hotel_id, startDate, endDate) {
+    var i,
+        list = [];
+    for (i = 0; i < _hospedagens.length; i++) {
+      if (hotel_id === _hospedagens[i].empresa && _hospedagens[i].data_checkout &&
+         _hospedagens[i].data_checkout >= startDate && _hospedagens[i].data_checkout <= endDate) {
+        list.push(_hospedagens[i]);
+      }
+    }
+    return list;
+  };
+
   pad = function(number) {
     if (number.toString().length === 1)
       return '0' + number;
@@ -212,7 +225,7 @@ spa.fake = (function() {
 
       if (msg_type === 'getactivelist' && callback_map.getactivelist) {
         setTimeout(function() {
-          var id = data.hotel,
+          var id = spa.user.getUser().empresa,
               hospedagem_map = {},
               list;
           if (id) {
@@ -258,7 +271,7 @@ spa.fake = (function() {
       if (msg_type === 'gethospedagens' && callback_map.gethospedagens) {
         setTimeout(function() {
           var client_id = data.client,
-              hotel_id = data.hotel,
+              hotel_id = spa.user.getUser().empresa,
               hospedagens_map = {},
               list;
           if (client_id && hotel_id) {
@@ -272,6 +285,25 @@ spa.fake = (function() {
             hospedagens_map.error = 'Não há hospedagens para esse cliente';
           }
           callback_map.gethospedagens(hospedagens_map);
+        }, 1000);
+      }
+
+      if (msg_type === 'getrelatorio' && callback_map.getrelatorio) {
+        setTimeout(function() {
+          var startDate = data.start,
+              endDate = data.end,
+              hotel_id = spa.user.getUser().empresa,
+              relatorio_map = {},
+              list;
+          if (startDate && endDate) {
+            list = getHospedagemByDate(hotel_id, startDate, endDate);
+            if (list.length > 0) {
+              relatorio_map.entries = list;
+            } else {
+              relatorio_map.error = 'Nenhuma hospedagem encontrada nesse período';
+            }
+          }
+          callback_map.getrelatorio(relatorio_map);
         }, 1000);
       }
     };
