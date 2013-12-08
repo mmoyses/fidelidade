@@ -24,7 +24,9 @@ spa.relatorios = (function() {
       hospedagem_model: null
     },
     stateMap = {
-      $container: null
+      $container: null,
+      startDate: null,
+      endDate: null
     },
     jqueryMap = {},
     setJqueryMap, configModule, initModule, onSubmitRelatorio, onGetRelatorio,
@@ -41,6 +43,7 @@ spa.relatorios = (function() {
       $start: $container.find('#start'),
       $end: $container.find('#end'),
       $table: null,
+      $export: null,
       $window: $(window)
     };
   };
@@ -82,9 +85,11 @@ spa.relatorios = (function() {
       endDate = new Date('20' + d[2], month, d[0], '12', '00', '00');
     }
     if (startDate) {
+      stateMap.startDate = startDate;
       if (!endDate) {
         endDate = new Date();
       }
+      stateMap.endDate = endDate;
       configMap.hospedagem_model.getRelatorio(startDate, endDate);
     } else {
       jqueryMap.$helpBlock.html('Preencha pelo menos a data de início').addClass('text-error');
@@ -136,6 +141,12 @@ spa.relatorios = (function() {
         $tfoot.append('<tr class="warning">' +
           '<td colspan="3">Total</td><td>' + spa.util.toReal(total.toFixed(2)) + '</td>' +
           '<td>' + spa.util.toReal((total * 2).toFixed(2)) + '</td></tr>');
+        jqueryMap.$relatorio.append('<form method="get" action="relatorio.csv">' +
+          '<input type="hidden" name="startDate" value="' + stateMap.startDate + '"/>' +
+          '<input type="hidden" name="endDate" value="' + stateMap.endDate + '"/>' +
+          '<button class="btn btn-default" type="submit" id="export">Exportar Relatório</button>' +
+        '</form>');
+        jqueryMap.$export = jqueryMap.$relatorio.find('#export');
       }
     }
   };
@@ -166,6 +177,8 @@ spa.relatorios = (function() {
       jqueryMap = {};
     }
     stateMap.$container = null;
+    stateMap.startDate = null;
+    stateMap.endDate = null;
   };
 
   setParameters = function() {

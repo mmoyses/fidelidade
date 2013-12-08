@@ -23,6 +23,14 @@ module.exports = function(app, passport) {
     failureFlash: 'Email ou senha inválida!'
   }));
 
+  app.get('/relatorio.csv', function(req, res) {
+    var startDate = new Date(req.query.startDate),
+        endDate = new Date(req.query.endDate);
+    res.setHeader('Content-disposition', 'attachment; filename=relatorio.csv');
+    res.setHeader('Content-type', 'text/csv');
+    res.send(200, 'lala;lele');
+  });
+
   //Home route
   app.get('/', index.render);
 };

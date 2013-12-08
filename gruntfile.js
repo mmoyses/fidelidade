@@ -10,8 +10,8 @@ module.exports = function(grunt) {
         }
       },
       js: {
-        files: ['public/js/**', 'app/**/*.js'],
-        tasks: ['jshint'],
+        files: ['app/**/*.js'],
+        tasks: ['jshint', 'concat', 'uglify'],
         options: {
           livereload: true
         }
