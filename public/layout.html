@@ -65,52 +65,48 @@
         </div>
       </nav>
       <div class="container">
-        <div class="relatorio">
-          <form class="form-inline">
+        <div class="usuario">
+          <form class="form-horizontal">
             <fieldset>
-              <legend>Relatórios</legend>
-              <div class="form-group col-xs-2 start">
-                <label for="start">Data Início</label>
-                <input type="text" id="start" name="start" class="form-control">
+              <legend>Usuário</legend>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="name">Nome</label>
+                <div class="col-sm-5">
+                  <input type="text" id="name" name="name" class="form-control required" placeholder="Nome completo">
+                </div>
               </div>
-              <div class="form-group col-xs-2 end">
-                <label for="end">Data Fim</label>
-                <input type="text" id="end" name="end" class="form-control">
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="login">Login</label>
+                <div class="col-sm-5">
+                  <input type="text" id="login" name="login" class="form-control required" placeholder="Login">
+                </div>
               </div>
-              <button type="submit" class="btn btn-default">Procurar</button>
-              <span class="help-block">&nbsp;</span>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Email</label>
+                <div class="col-sm-5">
+                  <input type="email" id="email" name="email" class="form-control required" placeholder="Email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="password">Senha</label>
+                <div class="col-sm-5">
+                  <input type="password" id="password" name="password" class="form-control required" placeholder="Senha">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="confirm">Confirmação</label>
+                <div class="col-sm-5">
+                  <input type="password" id="confirm" name="confirm" class="form-control required" placeholder="Confirme a senha">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-1">
+                  <button type="submit" class="btn btn-primary">Criar</button>
+                  <span class="help-block">&nbsp;</span>
+                </div>
+              </div>
             </fieldset>
           </form>
-          <div class="table-responsive">
-            <table class="table table-striped table-condensed">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Data check-in</th>
-                  <th>Data check-out</th>
-                  <th>R$ Cliente</th>
-                  <th>R$ Programa</th>
-                </tr>
-              </thead>
-              <tbody class="tbody">
-                <tr>
-                  <td>MARCUS MACHADO SAMPAIO MOYSES</td>
-                  <td>01/01/2013</td>
-                  <td>02/01/2013</td>
-                  <td>10,00</td>
-                  <td>20,00</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr class="warning">
-                  <td colspan="3">Total</td>
-                  <td>10,00</td>
-                  <td>20,00</td>
-                </tr>
-              </tfoot>
-            </table>
-            <button class="btn btn-default" id="export">Exportar Relatorio</button>
-          </div>
         </div>
       </div>
       <div id="push"></div>
