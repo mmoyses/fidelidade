@@ -74,10 +74,9 @@ module.exports = function(grunt) {
     },
     concat: {
       dist: {
-        src: ['app/frontend/spa.js', 'app/frontend/spa.util.js', 'app/frontend/spa.data.js',
-              'app/frontend/spa.fake.js', 'app/frontend/spa.model.js', 'app/frontend/spa.home.js',
-              'app/frontend/spa.checkin.js', 'app/frontend/spa.checkout.js', 'app/frontend/spa.consultar.js',
-              'app/frontend/spa.relatorios.js', 'app/frontend/spa.user.js', 'app/frontend/spa.shell.js'],
+        src: ['app/frontend/app.js', 'app/frontend/config.js', 'app/frontend/controllers/navbar.js',
+              'app/frontend/controllers/checkin.js', 'app/frontend/controllers/checkout.js',
+              'app/frontend/controllers/consultar.js', 'app/frontend/controllers/relatorios.js'],
         dest: 'public/js/spa.js'
       }
     },

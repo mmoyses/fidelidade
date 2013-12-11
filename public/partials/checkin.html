@@ -1,0 +1,23 @@
+<div class="check-in" data-ng-controller="CheckinController">
+  <form class="form-inline">
+    <fieldset>
+      <legend>Check-in</legend>
+      <div class="form-group">
+        <label class="sr-only" for="id">Id do cliente</label>
+        <input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">
+      </div>
+      <button type="submit" class="btn btn-default">Procurar</button>
+      <span class="help-block">&nbsp;</span>
+    </fieldset>
+  </form>
+  <form class="form-checkin">
+    <div class="row">
+      <div class="form-group col-xs-3">
+        <label for="date">Data</label>
+        <input type="text" id="date" name="date" class="form-control" disabled="disabled"/>
+      </div>
+    </div>
+    <button class="btn btn-primary" disabled="disabled">Check-in</button>
+    <span class="help-inline"></span>
+  </form>
+</div>

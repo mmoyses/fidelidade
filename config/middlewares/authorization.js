@@ -3,17 +3,17 @@ exports.requiresLogin = function(req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    var msg = req.flash('error')[0],
-      error = true;
+    var msg = req.flash('error')[0];
+    error = true;
     if (!msg) {
-      msg = '&nbsp;'
+      msg = '&nbsp;';
       error = false;
     }
     res.render('login', { msg: msg, error: error });
   }
 };
 
-exports.userLogin = function(req, res, next) {
+exports.userLogin = function(req, res) {
   var error;
   if (req.isAuthenticated()) {
     res.render('index');
@@ -23,7 +23,7 @@ exports.userLogin = function(req, res, next) {
   }
 };
 
-exports.clientLogin = function(req, res, next) {
+exports.clientLogin = function(req, res) {
   var error;
   if (req.isAuthenticated()) {
     res.render('index');

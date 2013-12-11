@@ -1,26 +1,40 @@
 {
-  "name": "mean",
+  "name": "fidelidade",
   "version": "1.0.0",
   "dependencies": {
     "bootstrap": "~3.0.2",
-    "jquery-maskedinputs": "~1.3.1",
     "html5shiv": "~3.7.0",
-    "jquery-maskmoney": "~2.1.2"
+    "jquery": "~1.10.2",
+    "angular": "~1.2.3",
+    "angular-route": "~1.2.3",
+    "angular-ui-date": "~0.0.3",
+    "jquery-ui": "~1.10.3"
   },
-  "exportsOverride": {                                                                                                                                                                                                                     
+  "exportsOverride": {
     "bootstrap": {
       "css": "dist/css/bootstrap.min.css",
       "js": "dist/js/bootstrap.min.js",
       "fonts": "dist/fonts/*.*"
     },
-    "jquery-maskedinputs": {
-      "js": "dist/jquery.maskedinput.min.js"
-    },
     "html5shiv": {
       "js": "dist/html5shiv.js"
     },
-    "jquery-maskmoney": {
-      "js": "jquery.maskMoney.js"
+    "jquery": {
+      "js": "jquery.min.*"
+    },
+    "jquery-ui": {
+      "js": "ui/jquery-ui.js",
+      "themes": "themes"
+    },
+    "angular": {
+      "js": "angular.min.js*",
+      "css": "angular-csp.css"
+    },
+    "angular-route": {
+      "js": "angular-route.min.js*"
+    },
+    "angular-ui-date": {
+      "js": "src/date.js"
     }
   }
 }
