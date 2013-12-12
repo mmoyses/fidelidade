@@ -1,15 +1,15 @@
 module.exports = function(app, passport) {
-  var usuarios = require('../app/controllers/usuarios'),
-    empresas = require('../app/controllers/empresas'),
+  var usuario = require('../app/controllers/usuario'),
     auth = require('./middlewares/authorization'),
-    index = require('../app/controllers/index');
+    index = require('../app/controllers/index'),
+    cliente = require('../app/controllers/cliente');
 
   app.get('/login', auth.userLogin);
   app.get('/erro', auth.clientLogin);
 
   app.get('/*?', auth.requiresLogin);
 
-  app.get('/sair', usuarios.signout);
+  app.get('/sair', usuario.signout);
 
   app.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
@@ -30,6 +30,9 @@ module.exports = function(app, passport) {
     res.setHeader('Content-type', 'text/csv');
     res.send(200, 'lala;lele');
   });
+
+  app.get('/data/cliente/:id', cliente.findSimple);
+  app.post('/data/checkin', cliente.checkin);
 
   //Home route
   app.get('/', index.render);

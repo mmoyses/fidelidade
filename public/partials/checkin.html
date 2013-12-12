@@ -1,23 +1,23 @@
 <div class="check-in" data-ng-controller="CheckinController">
-  <form class="form-inline">
+  <form class="form-inline" data-ng-class="{'has-error':error}">
     <fieldset>
       <legend>Check-in</legend>
       <div class="form-group">
         <label class="sr-only" for="id">Id do cliente</label>
-        <input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">
+        <input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…" data-ng-model="id" data-ng-required="true" data-ng-class="{'text-error':error}">
       </div>
-      <button type="submit" class="btn btn-default">Procurar</button>
-      <span class="help-block">&nbsp;</span>
+      <button type="submit" class="btn btn-default" data-ng-click="findCliente()">Procurar</button>
+      <span class="help-block">{{nome || '&nbsp;'}}</span>
     </fieldset>
   </form>
   <form class="form-checkin">
     <div class="row">
       <div class="form-group col-xs-3">
         <label for="date">Data</label>
-        <input type="text" id="date" name="date" class="form-control" disabled="disabled"/>
+        <input type="text" id="date" name="date" class="form-control" ui-date="dateOptions" data-ng-model="date" data-ng-disabled="isNomeEmpty()"/>
       </div>
     </div>
-    <button class="btn btn-primary" disabled="disabled">Check-in</button>
-    <span class="help-inline"></span>
+    <button class="btn btn-primary" data-ng-disabled="isDateEmpty()" data-ng-click="checkin()">Check-in</button>
+    <span class="help-inline" data-ng-class="{'text-success':success,'text-error':failure}">{{message}}</span>
   </form>
 </div>
