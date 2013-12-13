@@ -18,7 +18,7 @@ exports.checkin = function(req, res) {
   var hospedagem,
       empresa = req.user.empresa,
       cliente = req.body.cliente,
-      date = req.body.date;
+      date = new Date(req.body.date);
   Hospedagem.findOne({ empresa: empresa, cliente: cliente, data_checkout: { $exists: false } })
     .exec(function(err, h) {
       if (err)
@@ -45,6 +45,8 @@ exports.checkin = function(req, res) {
                   cliente.hospedagens = [];
                 cliente.hospedagens.push(hospedagem._id);
                 cliente.save();
+                hospedagem.nome = cliente.nome;
+                hospedagem.save();
                 res.send(200);
               }
             });

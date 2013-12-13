@@ -1,4 +1,4 @@
-angular.module('spa').config(['$routeProvider', function($routeProvider) {
+angular.module('spa').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.
     when('/checkin', {
       templateUrl: 'partials/checkin.html'
@@ -18,4 +18,6 @@ angular.module('spa').config(['$routeProvider', function($routeProvider) {
     otherwise({
       redirectTo: '/home'
     });
+
+  $locationProvider.html5Mode(true).hashPrefix('!');
 }]);

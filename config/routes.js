@@ -2,7 +2,8 @@ module.exports = function(app, passport) {
   var usuario = require('../app/controllers/usuario'),
     auth = require('./middlewares/authorization'),
     index = require('../app/controllers/index'),
-    cliente = require('../app/controllers/cliente');
+    cliente = require('../app/controllers/cliente'),
+    hospedagem = require('../app/controllers/hospedagem');
 
   app.get('/login', auth.userLogin);
   app.get('/erro', auth.clientLogin);
@@ -33,6 +34,8 @@ module.exports = function(app, passport) {
 
   app.get('/data/cliente/:id', cliente.findSimple);
   app.post('/data/checkin', cliente.checkin);
+  app.get('/data/checkout', hospedagem.findOpen);
+  app.post('/data/checkout', hospedagem.checkout);
 
   //Home route
   app.get('/', index.render);

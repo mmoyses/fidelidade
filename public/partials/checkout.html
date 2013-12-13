@@ -1,25 +1,30 @@
-<div class="check-out" data-ng-controller="CheckoutController">
+<div class="check-out" data-ng-controller="CheckoutController" data-ng-init="fetch()">
   <form class="form-checkout">
     <fieldset>
       <legend>Check-out</legend>
       <div class="row">
         <div class="form-group hospedagem">
+          <p class="text-info" data-ng-show="error">{{error}}</p>
+          <label class="radio" data-ng-repeat="hospedagem in hospedagens">
+            <input type="radio" value="{{$index}}" data-ng-model="$parent.h">{{hospedagem.nome}} ({{hospedagem.data_checkin | date:'dd/MM/yyyy'}})
+          </label>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-xs-3">
           <label for="date">Data</label>
-          <input type="text" id="date" name="date" class="form-control" disabled="disabled"/>
+          <input type="text" id="date" name="date" class="form-control" ui-date="dateOptions" data-ng-disabled="!h" data-ng-model="date"/>
         </div>
         <div class="form-group col-xs-3">
           <label for="price">Valor diárias</label>
-          <input type="text" id="price" name="price" class="form-control" disabled="disabled"/>
+          <input type="text" id="price" name="price" class="form-control" data-ng-disabled="!h" data-ng-model="price"/>
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" disabled="disabled">Check-out</button>
-        <span class="help-inline"></span>
+        <button class="btn btn-primary" data-ng-disabled="!date || !price" data-ng-click="checkout()">Check-out</button>
+        <span class="help-inline"data-ng-class="{'text-success':success,'text-error':failure}">{{message}}</span>
       </div>
     </fieldset>
   </form>
+  <div>{{selected}}</div>
 </div>
