@@ -34,3 +34,65 @@ exports.checkout = function(req, res) {
     }
   });
 };
+
+exports.findHospedagens = function(req, res) {
+  var startDate = new Date(Number(req.query.startDate)),
+      endDate = new Date(Number(req.query.endDate)),
+      empresa = req.user.empresa;
+  Hospedagem.find({ empresa: empresa, data_checkout: { $gte: startDate, $lte: endDate } }, { empresa: 0 })
+    .exec(function(err, hospedagens) {
+    if (err)
+      res.send(500);
+    else if(hospedagens && hospedagens.length > 0) {
+      res.send(200, hospedagens);
+    } else
+      res.send(404);
+  });
+};
+
+function getDate(date) {
+  var day, month, year;
+  day = date.getDate().toString();
+  if (day.length === 1)
+    day = '0' + day;
+  month = (date.getMonth() + 1).toString();
+  if (month.length === 1)
+    month = '0' + month;
+  year = date.getFullYear().toString();
+
+  return day + '/' + month + '/' + year;
+}
+
+function toReal(price) {
+  var p = price.toFixed(2);
+  return p.replace(',', '#').replace('.', ',').replace('#', '.');
+}
+
+exports.relatorio = function(req, res) {
+  var startDateParam = req.query.startDate,
+      endDateParam = req.query.endDate || Date.now().toString(),
+      empresa = req.user.empresa,
+      text = 'Cliente;Data Checkin-in;Data Check-out;R$ Cliente;R$ Programa',
+      total = 0,
+      i, startDate, endDate;
+  startDate = new Date(Number(startDateParam));
+  endDate = new Date(Number(endDateParam));
+  Hospedagem.find({ empresa: empresa, data_checkout: { $gte: startDate, $lte: endDate } }, { empresa: 0 })
+    .exec(function(err, hospedagens) {
+    if(hospedagens && hospedagens.length > 0) {
+      for (i = 0; i < hospedagens.length; i++) {
+        text += '\n' + hospedagens[i].nome + ';' +
+                       getDate(hospedagens[i].data_checkin) + ';' +
+                       getDate(hospedagens[i].data_checkout) + ';' +
+                       toReal(hospedagens[i].pontos) + ';' +
+                       toReal(hospedagens[i].pontos * 2);
+        total += hospedagens[i].pontos;
+      }
+    }
+    text += '\nTotal;;;' +
+      toReal(total) + ';' + toReal(total * 2);
+    res.setHeader('Content-disposition', 'attachment; filename=relatorio.csv');
+    res.setHeader('Content-type', 'text/csv');
+    res.send(200, text);
+  });
+};

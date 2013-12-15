@@ -1,17 +1,53 @@
 <div class="relatorio" data-ng-controller="RelatoriosController">
-  <form class="form-inline">
+  <form class="form-inline" data-ng-class="{'has-error':error}">
     <fieldset>
       <legend>Relatórios</legend>
       <div class="form-group col-xs-2 start">
         <label for="start">Data Início</label>
-        <input type="text" id="start" name="start" class="form-control">
+        <input type="text" id="start" name="start" class="form-control" ui-date="dateOptions" data-ng-model="startDate" data-ng-required="true">
       </div>
       <div class="form-group col-xs-2 end">
         <label for="end">Data Fim</label>
-        <input type="text" id="end" name="end" class="form-control">
+        <input type="text" id="end" name="end" class="form-control" ui-date="dateOptions" data-ng-model="endDate">
       </div>
-      <button type="submit" class="btn btn-default">Procurar</button>
-      <span class="help-block">&nbsp;</span>
+      <button type="submit" class="btn btn-default" data-ng-click="createReport()">Procurar</button>
+      <span class="help-block" data-ng-class="{'text-error':error}">{{error || '&nbsp;'}}</span>
     </fieldset>
+  </form>
+  <p class="table-responsive" data-ng-show="message">{{message}}</p>
+  <div class="table-responsive" data-ng-show="entries">
+    <table class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Data check-in</th>
+          <th>Data check-out</th>
+          <th>R$ Cliente</th>
+          <th>R$ Programa</th>
+        </tr>
+      </thead>
+      <tbody class="tbody">
+        <tr data-ng-repeat="entry in entries">
+          <td>{{entry.nome}}</td>
+            <td>{{entry.data_checkin | date:'dd/MM/yyyy'}}</td>
+            <td>{{entry.data_checkout | date:'dd/MM/yyyy'}}</td>
+            <td>{{entry.pontos | currency:'' | brazilianCurrency}}</td>
+            <td>{{entry.pontos * 2 | currency:'' | brazilianCurrency}}</td>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="tfoot">
+        <tr class="warning">
+          <td colspan="3">Total</td>
+          <td>{{total | currency:'' | brazilianCurrency}}</td>
+          <td>{{total * 2 | currency:'' | brazilianCurrency}}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <form method="get" action="relatorio.csv" data-ng-show="entries">
+    <input type="hidden" name="startDate" value="{{startDate.valueOf()}}"/>
+    <input type="hidden" name="endDate" value="{{endDate.valueOf() || Date.now()}}"/>
+    <button class="btn btn-default" type="submit" id="export">Exportar Relatório</button>
   </form>
 </div>

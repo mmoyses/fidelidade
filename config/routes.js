@@ -24,19 +24,14 @@ module.exports = function(app, passport) {
     failureFlash: 'Email ou senha inválida!'
   }));
 
-  app.get('/relatorio.csv', function(req, res) {
-    var startDate = new Date(req.query.startDate),
-        endDate = new Date(req.query.endDate);
-    res.setHeader('Content-disposition', 'attachment; filename=relatorio.csv');
-    res.setHeader('Content-type', 'text/csv');
-    res.send(200, 'lala;lele');
-  });
+  app.get('/relatorio.csv', hospedagem.relatorio);
 
   app.get('/data/cliente/:id', cliente.findSimple);
   app.post('/data/checkin', cliente.checkin);
   app.get('/data/checkout', hospedagem.findOpen);
   app.post('/data/checkout', hospedagem.checkout);
   app.get('/data/cliente/hospedagens/:id', cliente.findHospedagens);
+  app.get('/data/hospedagens', hospedagem.findHospedagens);
 
   //Home route
   app.get('/', index.render);

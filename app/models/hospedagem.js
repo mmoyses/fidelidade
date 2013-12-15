@@ -6,7 +6,8 @@ var HospedagemSchema = new Schema({
   data_checkin: Date,
   data_checkout: Date,
   pontos: Number,
-  cliente: String
+  cliente: String,
+  nome: String
 });
 
 mongoose.model('Hospedagem', HospedagemSchema, 'hospedagem');

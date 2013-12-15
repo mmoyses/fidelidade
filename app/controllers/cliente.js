@@ -57,14 +57,23 @@ exports.checkin = function(req, res) {
 };
 
 exports.findHospedagens = function(req, res) {
-  var id = req.params.id;
-  Cliente.findOne({ _id: id }).populate('hospedagens').exec(function(err, cliente) {
+  var id = req.params.id,
+      empresa = req.user.empresa;
+  Hospedagem.find({ empresa: empresa, cliente: id }).exec(function(err, hospedagens) {
     if (err)
       res.send(500);
-    else if (cliente) {
-      res.send(200, { nome: cliente.nome, hospedagens: cliente.hospedagens });
+    else if (hospedagens && hospedagens.length > 0) {
+      res.send(200, { nome: hospedagens[0].nome, hospedagens: hospedagens });
     }
-    else
-      res.send(404);
+    else {
+      Cliente.findOne({ _id: id }, { nome: 1 }).exec(function(err, cliente) {
+        if (err)
+          res.send(500);
+        else if(!cliente)
+          res.send(404);
+        else
+          res.send(200, { nome: cliente.nome, hospedagens: []});
+      });
+    }
   });
 };
