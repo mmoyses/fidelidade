@@ -74,9 +74,7 @@ module.exports = function(grunt) {
     },
     concat: {
       dist: {
-        src: ['app/frontend/app.js', 'app/frontend/config.js', 'app/frontend/controllers/navbar.js',
-              'app/frontend/controllers/checkin.js', 'app/frontend/controllers/checkout.js',
-              'app/frontend/controllers/consultar.js', 'app/frontend/controllers/relatorios.js'],
+        src: ['app/frontend/**/*.js'],
         dest: 'public/js/spa.js'
       }
     },
