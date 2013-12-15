@@ -1,13 +1,28 @@
 <div class="consulta" data-ng-controller="ConsultarController">
-  <form class="form-inline">
+  <form class="form-inline" data-ng-class="{'has-error':error}">
     <fieldset>
       <legend>Consulta</legend>
       <div class="form-group">
         <label class="sr-only" for="id">Id do cliente</label>
-        <input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…">
+        <input type="text" id="id" name="id" class="form-control" placeholder="Digite o ID…" data-ng-model="id" data-ng-required="true">
       </div>
-      <button type="submit" class="btn btn-default">Procurar</button>
-      <span class="help-block">&nbsp;</span>
+      <button type="submit" class="btn btn-default" data-ng-click="findCliente()">Procurar</button>
+      <span class="help-block" data-ng-class="{'text-error':error}">{{nome || '&nbsp;'}}</span>
     </fieldset>
   </form>
+  <p class="table" data-ng-show="message">{{message}}</p>
+  <table class="table table-striped" data-ng-show="hospedagens">
+    <thead>
+      <tr>
+        <th>Data check-in</th><th>Data check-out</th><th>Pontos</th>
+      </tr>
+    </thead>
+    <tbody class="tbody">
+      <tr data-ng-repeat="hospedagem in hospedagens">
+        <td>{{hospedagem.data_checkin | date:'dd/MM/yyyy'}}</td>
+        <td>{{hospedagem.data_checkout | date:'dd/MM/yyyy'}}</td>
+        <td>{{hospedagem.pontos | currency:'' | brazilianCurrency}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

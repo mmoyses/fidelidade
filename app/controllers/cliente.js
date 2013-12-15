@@ -55,3 +55,16 @@ exports.checkin = function(req, res) {
       }
     });
 };
+
+exports.findHospedagens = function(req, res) {
+  var id = req.params.id;
+  Cliente.findOne({ _id: id }).populate('hospedagens').exec(function(err, cliente) {
+    if (err)
+      res.send(500);
+    else if (cliente) {
+      res.send(200, { nome: cliente.nome, hospedagens: cliente.hospedagens });
+    }
+    else
+      res.send(404);
+  });
+};
