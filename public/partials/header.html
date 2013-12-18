@@ -10,15 +10,12 @@
 <div class="collapse navbar-collapse" id="navbar-collapse">
   <ul class="nav navbar-nav">
     <li data-ng-class="{'active':highlight('/home')}"><a href="/home"><span class="glyphicon glyphicon-home"></span></a></li>
-    <li data-ng-class="{'active':highlight('/checkin')}"><a href="/checkin">Check-in</span></a></li>
-    <li data-ng-class="{'active':highlight('/checkout')}"><a href="/checkout">Check-out</span></a></li>
-    <li data-ng-class="{'active':highlight('/consultar')}"><a href="/consultar">Consultar</span></a></li>
-    <li data-ng-class="{'active':highlight('/relatorios')}"><a href="/relatorios">Relatórios</span></a></li>
+    <li data-ng-class="{'active':highlight(nav.link)}" data-ng-repeat="nav in navs"><a href="{{nav.link}}">{{nav.label}}</span></a></li>
   </ul>
   <ul class="nav navbar-nav pull-right">
     <li class="divider-vertical"></li>
     <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Marcus Moysés</a>
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{nome}}</a>
       <ul class="dropdown-menu">
         <li><a href="/sair" target="_self">Sair</a></li>
       </ul>

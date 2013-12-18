@@ -32,6 +32,7 @@ module.exports = function(app, passport) {
   app.post('/data/checkout', hospedagem.checkout);
   app.get('/data/cliente/hospedagens/:id', cliente.findHospedagens);
   app.get('/data/hospedagens', hospedagem.findHospedagens);
+  app.get('/data/current-user', auth.currentUser);
 
   //Home route
   app.get('/', index.render);

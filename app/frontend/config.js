@@ -1,16 +1,30 @@
-angular.module('spa').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('spa')
+  .config(['$routeProvider', '$locationProvider', 'authorizationProvider',
+  function($routeProvider, $locationProvider, authorizationProvider) {
   $routeProvider.
     when('/checkin', {
-      templateUrl: 'partials/checkin.html'
+      templateUrl: 'partials/checkin.html',
+      resolve: {
+        authenticated: authorizationProvider.requireAuthenticatedUser
+      }
     }).
     when('/checkout', {
-      templateUrl: 'partials/checkout.html'
+      templateUrl: 'partials/checkout.html',
+      resolve: {
+        authenticated: authorizationProvider.requireAuthenticatedUser
+      }
     }).
     when('/consultar', {
-      templateUrl: 'partials/consultar.html'
+      templateUrl: 'partials/consultar.html',
+      resolve: {
+        authenticated: authorizationProvider.requireAuthenticatedUser
+      }
     }).
     when('/relatorios', {
-      templateUrl: 'partials/relatorios.html'
+      templateUrl: 'partials/relatorios.html',
+      resolve: {
+        authenticated: authorizationProvider.requireAuthenticatedUser
+      }
     }).
     when('/home', {
       templateUrl: 'partials/index.html'

@@ -32,3 +32,10 @@ exports.clientLogin = function(req, res) {
     res.render('clientLogin', { error: error });
   }
 };
+
+exports.currentUser = function(req, res) {
+  if (req.isAuthenticated())
+    res.send(200, req.user);
+  else
+    res.send(401);
+};
