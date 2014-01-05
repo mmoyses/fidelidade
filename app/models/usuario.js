@@ -22,15 +22,15 @@ UsuarioSchema.virtual('senha').set(function(senha) {
 
 UsuarioSchema.path('nome').validate(function(nome) {
   return nome.length;
-}, 'Nome não pode ser vazio');
+}, 'Campo nome não pode ser vazio');
 
 UsuarioSchema.path('email').validate(function(email) {
   return email.length;
-}, 'Email não pode ser vazio');
+}, 'Campo email não pode ser vazio');
 
 UsuarioSchema.path('hashed_password').validate(function(hashed_password) {
   return hashed_password.length;
-}, 'Senha não pode ser vazia');
+}, 'Campo senha não pode ser vazio');
 
 UsuarioSchema.methods = {
   authenticate: function(plainText) {

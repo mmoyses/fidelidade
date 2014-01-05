@@ -77,3 +77,47 @@ exports.findHospedagens = function(req, res) {
     }
   });
 };
+
+function getCliente(sent) {
+  var cliente = {};
+  cliente.nome = sent.nome;
+  cliente.email = sent.email;
+  cliente.documento = sent.documento;
+  cliente.endereco = sent.endereco;
+  cliente.cidade = sent.cidade;
+  cliente.estado = sent.estado;
+  cliente.cep = sent.cep;
+  cliente.telefone = sent.telefone;
+  cliente.celular = sent.celular;
+  cliente.empresa = sent.empresa;
+  cliente.senha = sent.senha;
+  cliente.confirm = sent.confirm;
+  cliente._id = mongoose.Types.ObjectId();
+  return cliente;
+}
+
+exports.newCliente = function(req, res, next) {
+  var c = getCliente(req.body),
+      error = false,
+      cliente;
+  if (c.senha !== c.confirm)
+    error = true;
+  if (!error) {
+    cliente = new Cliente(c);
+    cliente.save(function(err) {
+      if (err) {
+        console.log('err' + err);
+        res.render('login', { errors: err.errors, cliente: cliente });
+      } else {
+        req.login(cliente, function(error) {
+          console.log('error' + error);
+          if (error)
+            next(error);
+          else
+            res.redirect('/');
+        });
+      }
+    });
+  } else
+    res.render('login', { errors: { confirm: { message: 'Confirmação não estava igual' } }, cliente: c });
+};

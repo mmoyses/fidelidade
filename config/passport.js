@@ -44,14 +44,10 @@ module.exports = function(passport) {
         return done(err);
       }
       if (!user) {
-        return done(null, false, {
-          message: 'Usuário ou senha inválida!'
-        });
+        return done(null, false, { message: 'Usuário ou senha inválida!' });
       }
       if (!user.authenticate(password)) {
-        return done(null, false, {
-          message: 'Usuário ou senha inválida!'
-        });
+        return done(null, false, { message: 'Usuário ou senha inválida!' });
       }
       return done(null, user);
     });
@@ -70,14 +66,10 @@ module.exports = function(passport) {
         return done(err);
       }
       if (!client) {
-        return done(null, false, {
-          message: 'Email ou senha inválida!'
-        });
+        return done(null, false, { message: 'Email ou senha inválida!' });
       }
       if (!client.authenticate(password)) {
-        return done(null, false, {
-          message: 'Email ou senha inválida!'
-        });
+        return done(null, false, { message: 'Email ou senha inválida!' });
       }
       return done(null, client);
     });

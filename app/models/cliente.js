@@ -38,6 +38,38 @@ ClienteSchema.virtual('senha').set(function(senha) {
   return this._senha;
 });
 
+ClienteSchema.path('nome').validate(function(nome) {
+  return nome.length;
+}, 'Campo nome não pode ser vazio');
+
+ClienteSchema.path('documento').validate(function(documento) {
+  return documento.length;
+}, 'Campo documento não pode ser vazio');
+
+ClienteSchema.path('email').validate(function(email) {
+  return email.length;
+}, 'Campo email não pode ser vazio');
+
+ClienteSchema.path('endereco').validate(function(endereco) {
+  return endereco.length;
+}, 'Campo endereço não pode ser vazio');
+
+ClienteSchema.path('cidade').validate(function(cidade) {
+  return cidade.length;
+}, 'Campo cidade não pode ser vazio');
+
+ClienteSchema.path('estado').validate(function(estado) {
+  return estado.length;
+}, 'Campo estado não pode ser vazio');
+
+ClienteSchema.path('cep').validate(function(cep) {
+  return cep.length;
+}, 'Campo CEP não pode ser vazio');
+
+ClienteSchema.path('hashed_password').validate(function(hashed_password) {
+  return hashed_password.length;
+}, 'Campo senha não pode ser vazio');
+
 ClienteSchema.methods = {
   authenticate: function(plainText) {
     return security.encrypt(plainText) === this.hashed_password;

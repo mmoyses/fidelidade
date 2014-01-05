@@ -21,8 +21,10 @@ module.exports = function(app, passport) {
   app.post('/entrar', passport.authenticate('local-client', {
     failureRedirect: '/erro',
     successRedirect: '/',
-    failureFlash: 'Email ou senha inválida!'
+    failureFlash: true
   }));
+
+  app.post('/', cliente.newCliente);
 
   app.get('/relatorio.csv', hospedagem.relatorio);
 

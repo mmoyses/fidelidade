@@ -18,7 +18,7 @@ exports.userLogin = function(req, res) {
   if (req.isAuthenticated()) {
     res.render('index');
   } else {
-    error = req.flash('error')[0];
+    error = req.flash('error')[0] || 'Usuário ou senha inválida!';
     res.render('userLogin', { error: error });
   }
 };
@@ -28,7 +28,8 @@ exports.clientLogin = function(req, res) {
   if (req.isAuthenticated()) {
     res.render('index');
   } else {
-    error = req.flash('error')[0];
+    console.log(req.session);
+    error = req.flash('error')[0] || 'Email ou senha inválida!';
     res.render('clientLogin', { error: error });
   }
 };

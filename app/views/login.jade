@@ -18,36 +18,87 @@ block main
     div.content
       div.login-form
         h2 Crie uma conta
-        form.form-horizontal(action='/novo', method='post')
+        form.form-horizontal(action='/', method='post')
           fieldset
-            div.clearfix
-              label.col-sm-3.control-label(for='nome') Nome
-              div.col-sm-7
-                input.form-control.required(type='text', name='nome', placeholder='Nome completo')
-            div.clearfix
-              label.col-sm-3.control-label(for='email') Email
-              div.col-sm-7
-                input.form-control.required(type='text', name='email', placeholder='Email')
-            div.clearfix
-              label.col-sm-3.control-label(for='documento') Documento
-              div.col-sm-7
-                input.form-control.required(type='text', name='documento', placeholder='CPF ou passaporte')
-            div.clearfix
-              label.col-sm-3.control-label(for='endereco') Endereço
-              div.col-sm-7
-                input.form-control(type='text', name='endereco', placeholder='Logradouro, nº, complemento')
-            div.clearfix
-              label.col-sm-3.control-label(for='cidade') Cidade
-              div.col-sm-7
-                input.form-control(type='text', name='cidade', placeholder='Cidade')
-            div.clearfix
-              label.col-sm-3.control-label(for='estado') Estado
-              div.col-sm-7
-                input.form-control(type='text', name='estado', placeholder='Estado')
-            div.clearfix
-              label.col-sm-3.control-label(for='cep') CEP
-              div.col-sm-7
-                input.form-control(type='text', name='cep', placeholder='CEP')
+            - var c = cliente || {}
+            - var e = errors || {}
+            if e.nome
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='nome') Nome
+                div.col-sm-7
+                  input.form-control.required(type='text', name='nome', placeholder='Nome completo')
+                  span.help-block=e.nome.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='nome') Nome
+                div.col-sm-7
+                  input.form-control.required(type='text', name='nome', placeholder='Nome completo', value=c.nome)
+            if e.email
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='email') Email
+                div.col-sm-7
+                  input.form-control.required(type='text', name='email', placeholder='Email')
+                  span.help-block=e.email.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='email') Email
+                div.col-sm-7
+                  input.form-control.required(type='text', name='email', placeholder='Email', value=c.email)
+            if e.documento
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='documento') Documento
+                div.col-sm-7
+                  input.form-control.required(type='text', name='documento', placeholder='CPF ou passaporte')
+                  span.help-block=e.documento.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='documento') Documento
+                div.col-sm-7
+                  input.form-control.required(type='text', name='documento', placeholder='CPF ou passaporte', value=c.documento)
+            if e.endereco
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='endereco') Endereço
+                div.col-sm-7
+                  input.form-control(type='text', name='endereco', placeholder='Logradouro, nº, complemento')
+                  span.help-block=e.endereco.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='endereco') Endereço
+                div.col-sm-7
+                  input.form-control(type='text', name='endereco', placeholder='Logradouro, nº, complemento', value=c.endereco)
+            if e.cidade
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='cidade') Cidade
+                div.col-sm-7
+                  input.form-control(type='text', name='cidade', placeholder='Cidade')
+                  span.help-block=e.cidade.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='cidade') Cidade
+                div.col-sm-7
+                  input.form-control(type='text', name='cidade', placeholder='Cidade', value=c.cidade)
+            if e.estado
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='estado') Estado
+                div.col-sm-7
+                  input.form-control(type='text', name='estado', placeholder='Estado')
+                  span.help-block=e.estado.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='estado') Estado
+                div.col-sm-7
+                  input.form-control(type='text', name='estado', placeholder='Estado', value=c.estado)
+            if e.cep
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='cep') CEP
+                div.col-sm-7
+                  input.form-control(type='text', name='cep', placeholder='CEP')
+                  span.help-block=e.cep.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='cep') CEP
+                div.col-sm-7
+                  input.form-control(type='text', name='cep', placeholder='CEP', value=c.cep)
             div.clearfix
               label.col-sm-3.control-label(for='telefone') Telefone
               div.col-sm-7
@@ -60,13 +111,27 @@ block main
               label.col-sm-3.control-label(for='empresa') Empresa
               div.col-sm-7
                 input.form-control(type='text', name='empresa', placeholder='Empresa')
-            div.clearfix
-              label.col-sm-3.control-label(for='senha') Senha
-              div.col-sm-7
-                input.form-control.required(type='password', name='senha', placeholder='Senha')
-            div.clearfix
+            if e.hashed_password
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='senha') Senha
+                div.col-sm-7
+                  input.form-control.required(type='password', name='senha', placeholder='Senha')
+                  span.help-block=e.hashed_password.message
+            else
+              div.clearfix
+                label.col-sm-3.control-label(for='senha') Senha
+                div.col-sm-7
+                  input.form-control.required(type='password', name='senha', placeholder='Senha')
+            if e.confirm
+              div.clearfix.has-error
+                label.col-sm-3.control-label(for='confirm') Confirmação
+                div.col-sm-7
+                  input.form-control.required(type='password', name='confirm', placeholder='Confirme a senha')
+                  span.help-block=e.confirm.message
+            else
+              div.clearfix
               label.col-sm-3.control-label(for='confirm') Confirmação
               div.col-sm-7
-                input.form-control.required(type='text', name='confirm', placeholder='Confirme a senha')
+                input.form-control.required(type='password', name='confirm', placeholder='Confirme a senha')
             div.col-sm-offset-3.col-sm-7
               button.btn.btn-primary.btn-block(type='submit') Criar
